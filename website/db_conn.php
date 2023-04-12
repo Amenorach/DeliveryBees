@@ -1,8 +1,25 @@
 <?php
+//for MongoDB server
 //Database credentials
-//for XAMPP
-define("DATABASE", "deliveryBees");
-define("SERVER", "localhost");
-define("USERNAME", "root");
-define("PASSWD", "");
+
+require 'vendor/autoload.php';
+
+define("DATABASE", "mydatabase");
+define("SERVER", "mongodb://localhost:27017");
+define("USERNAME", "myusername");
+define("PASSWORD", "mypassword");
+
+// Create a MongoDB client instance
+$uri = SERVER;
+$options = [
+    'username' => USERNAME,
+    'password' => PASSWORD,
+    'authSource' => DATABASE,
+];
+$client = new MongoDB\Client($uri, $options);
+
+// Select the database to use
+$database = $client->selectDatabase(DATABASE);
 ?>
+
+
