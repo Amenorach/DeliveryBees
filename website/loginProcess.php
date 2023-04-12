@@ -22,13 +22,7 @@ if (isset($_POST['loginButton'])) {
         if ($verify) {
             $_SESSION['customer_email'] = $result['customer_email'];
             $_SESSION['customer_id'] = $result['customer_id'];
-            $_SESSION['user_role'] = $result['user_role'];
-            header("Location: ../Views/homepage.php");
-            if ($_SESSION['user_role'] == 2) {
-                header('location: ../Views/adminHome.php');
-            } else {
-                header('location: ../Views/homepage.php');
-            }
+            header("Location: homepage.php");
         } else {
             header("location: ../errors/failLog.php");
         }
