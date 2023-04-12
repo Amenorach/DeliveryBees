@@ -1,12 +1,22 @@
 CREATE DATABASE deliveryBees;
 
 USE deliveryBees;
--- Create a new table called ‘Courier Details' in schema 'dbo'
--- Drop the table if it already exists
+-- Create a new table called ‘Courier Details' in schema 'dbo' --
+-- Drop the table if it already exists --
+
 IF OBJECT_ID('dbo.Courier', 'U') IS NOT NULL
 DROP TABLE dbo.Courier 
 GO
--- Create the table in the specified schema
+
+CREATE TABLE dbo.Courier (
+   CourierId        INT    NOT NULL  PRIMARY KEY, 
+   Rider_fname      VARCHAR (10)  NOT NULL,
+   Rider_lname  VARCHAR(10)  NOT NULL,
+   Rider_number   NVARCHAR(30)  NOT NULL
+);
+
+
+-- Create the table in the specified schema--
 
 CREATE TABLE customer (
   cust_id INT PRIMARY KEY,
@@ -14,15 +24,6 @@ CREATE TABLE customer (
   cust_lname VARCHAR(50) NOT NULL,
   cust_email VARCHAR(100) NOT NULL,
   cust_phone VARCHAR(20),
-  address VARCHAR(200),
-);
-
-
-CREATE TABLE dbo.Courier (
-   CourierId        INT    NOT NULL  PRIMARY KEY, 
-   Rider_fname      VARCHAR (10)  NOT NULL,
-   Rider_lname  VARCHAR(10)  NOT NULL,
-   Rider_number   NVARCHAR(30)  NOT NULL
 );
 
 IF OBJECT_ID('dbo.Sender', 'U') IS NOT NULL
@@ -50,10 +51,17 @@ CREATE TABLE Package(
 	packageID INT NOT NULL,
 	deliveryID INT NOT NULL,
 	courierID INT NOT NULL,
-	recieptAddressID INT NOT NULL,
+	recipientAddressID INT NOT NULL,
 	pWeight DECIMAL(10,2) NOT NULL,
 	price DECIMAL(10,2) NOT NULL
 );
+
+CREATE TABLE recipient (
+  id INT PRIMARY KEY,
+  FOREIGN KEY (id) REFERENCES customer(cust_id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE payment (
   id INT PRIMARY KEY,
@@ -68,20 +76,7 @@ CREATE TABLE payment (
   FOREIGN KEY (package_id) REFERENCES package(id)
 );
 
--- Create the "delivery_rates" table
-CREATE TABLE delivery_rates (
-  rate_id INT PRIMARY KEY,
-  courier_id INT NOT NULL,
-  package_weight DECIMAL(10, 2) NOT NULL,
-  delivery_rate DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (courier_id) REFERENCES couriers (courier_id)
-);
 
-CREATE TABLE recipient (
-  id INT PRIMARY KEY,
-  FOREIGN KEY (id) REFERENCES customer(cust_id),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
   CREATE TABLE vehicle (
   id INT PRIMARY KEY,
@@ -97,7 +92,7 @@ CREATE TABLE DeliveryInformation(
 	deliveryDate DATE NOT NULL
 );
 
-CREATE TABLE recieptAddress(
+CREATE TABLE recipientAddress(
 	customerID INT NOT NULL,
 	street VARCHAR(100) NOT NULL,
 	houseNumber VARCHAR(20) NOT NULL,
@@ -135,16 +130,16 @@ INSERT INTO dbo.Courier VALUES
    ( N'Emmause Lane', N'78EL89', N'Community 25')
 
 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (1,"lioness","North","130 kg","40 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (2,"tiger","South","246 kg","58 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (3,"lion","North","190 kg","40 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (4,"cheetah","East","65 kg","25 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (5,"leopard","East","31 kg","20 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (6,"jaguar","East","90 kg","30 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (7,"puma","West","93 kg","31 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (8,"tiger","South","246 kg","58 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (9,"panther","West","88 kg","29 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recieptAddressID, pWeight, price) VALUES (10,"lion","North","190 kg","40 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (1,"lioness","North","130 kg","40 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (2,"tiger","South","246 kg","58 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (3,"lion","North","190 kg","40 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (4,"cheetah","East","65 kg","25 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (5,"leopard","East","31 kg","20 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (6,"jaguar","East","90 kg","30 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (7,"puma","West","93 kg","31 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (8,"tiger","South","246 kg","58 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (9,"panther","West","88 kg","29 kg"); 
+INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (10,"lion","North","190 kg","40 kg"); 
 
 
 INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (1,1,"Online");  
@@ -159,16 +154,16 @@ INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (9,9,"In-person
 INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (10,10,"Online");  
 
 
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Kwame Ato","+233554327586","Burma Camp - Accra","Speedy");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Lizbeth Cole","+233574827586","Awosie - Accra","Calcius");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Mary Otchere","+233248576586","Airport Residential Area - Accra","Kiera");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Yaw Kross","+233244327586","Spintex - Accra","Infinity");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Delilah Jones","+233234757586","Teshie Nungua - Accra","Amba");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Vera Akwei","+233559748328","Dansoman(SSNIT) - Accra","Bridge"); 
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("John Kennedy","+23323982785","Tse-Addo - Accra", "Killer");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Eyram Adjovi","+233279823579","Trassaco-Valley(Plot 1) - Accra","Ariel");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Nii Amon Atukweifio","+233268794125","Ashongmang Estate - Accra","Aliki");  
-INSERT INTO recieptAddress(recieptAddressID, street, houseNumber, city, country) VALUES ("Erica Sackey","+233279842578","East-Airport - Accra","Corvette"); 
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Kwame Ato","+233554327586","Burma Camp - Accra","Speedy");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Lizbeth Cole","+233574827586","Awosie - Accra","Calcius");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Mary Otchere","+233248576586","Airport Residential Area - Accra","Kiera");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Yaw Kross","+233244327586","Spintex - Accra","Infinity");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Delilah Jones","+233234757586","Teshie Nungua - Accra","Amba");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Vera Akwei","+233559748328","Dansoman(SSNIT) - Accra","Bridge"); 
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("John Kennedy","+23323982785","Tse-Addo - Accra", "Killer");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Eyram Adjovi","+233279823579","Trassaco-Valley(Plot 1) - Accra","Ariel");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Nii Amon Atukweifio","+233268794125","Ashongmang Estate - Accra","Aliki");  
+INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Erica Sackey","+233279842578","East-Airport - Accra","Corvette"); 
  
 
 INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (1,1,"Online");  
