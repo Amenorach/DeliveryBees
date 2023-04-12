@@ -14,12 +14,19 @@ CREATE TABLE dbo.Courier (
    Rider_number   NVARCHAR(30)  NOT NULL
 );
 
+IF OBJECT_ID('dbo.Sender', 'U') IS NOT NULL
+DROP TABLE dbo.Sender 
+GO
+
 CREATE TABLE dbo.Sender (
 
 CustomerID int FOREIGN KEY REFERENCES Customer(CustomerID),
 );
 
 
+IF OBJECT_ID('dbo.SenderAddress', 'U') IS NOT NULL
+DROP TABLE dbo.SenderAddress 
+GO
 CREATE TABLE dbo.SenderAddress(
 	Street VARCHAR (50)  NOT NULL,
 	houseNumber TINYINT(10)  NOT NULL,
