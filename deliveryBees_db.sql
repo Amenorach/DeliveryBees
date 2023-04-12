@@ -7,6 +7,17 @@ IF OBJECT_ID('dbo.Courier', 'U') IS NOT NULL
 DROP TABLE dbo.Courier 
 GO
 -- Create the table in the specified schema
+
+CREATE TABLE customer (
+  cust_id INT PRIMARY KEY,
+  cust_fname VARCHAR(50) NOT NULL,
+  cust_lname VARCHAR(50) NOT NULL,
+  cust_email VARCHAR(100) NOT NULL,
+  cust_phone VARCHAR(20),
+  address VARCHAR(200),
+);
+
+
 CREATE TABLE dbo.Courier (
    CourierId        INT    NOT NULL  PRIMARY KEY, 
    Rider_fname      VARCHAR (10)  NOT NULL,
@@ -42,6 +53,43 @@ CREATE TABLE Package(
 	recieptAddressID INT NOT NULL,
 	pWeight DECIMAL(10,2) NOT NULL,
 	price DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE payment (
+  id INT PRIMARY KEY,
+  amount DECIMAL(10,2) NOT NULL,
+  payment_date DATE NOT NULL,
+  courier_id INT NOT NULL,
+  recipient_id INT NOT NULL,
+  package_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (courier_id) REFERENCES courier(id),
+  FOREIGN KEY (recipient_id) REFERENCES recipient(id),
+  FOREIGN KEY (package_id) REFERENCES package(id)
+);
+
+-- Create the "delivery_rates" table
+CREATE TABLE delivery_rates (
+  rate_id INT PRIMARY KEY,
+  courier_id INT NOT NULL,
+  package_weight DECIMAL(10, 2) NOT NULL,
+  delivery_rate DECIMAL(10, 2) NOT NULL,
+  FOREIGN KEY (courier_id) REFERENCES couriers (courier_id)
+);
+
+CREATE TABLE recipient (
+  id INT PRIMARY KEY,
+  FOREIGN KEY (id) REFERENCES customer(cust_id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+  CREATE TABLE vehicle (
+  id INT PRIMARY KEY,
+  make VARCHAR(50),
+  model VARCHAR(50),
+  year INT,
+  license_plate VARCHAR(20),
+  type VARCHAR(50)
 );
 
 CREATE TABLE DeliveryInformation(
@@ -134,14 +182,7 @@ INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (8,8,"Online");
 INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (9,9,"In-person");  
 INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (10,10,"Online");  
  
-CREATE TABLE customer (
-  cust_id INT PRIMARY KEY,
-  cust_fname VARCHAR(50) NOT NULL,
-  cust_lname VARCHAR(50) NOT NULL,
-  cust_email VARCHAR(100) NOT NULL,
-  cust_phone VARCHAR(20),
-  address VARCHAR(200),
-);
+
 
 INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address)
 VALUES
@@ -158,20 +199,6 @@ VALUES
 
 
 
-
-CREATE TABLE payment (
-  id INT PRIMARY KEY,
-  amount DECIMAL(10,2) NOT NULL,
-  payment_date DATE NOT NULL,
-  courier_id INT NOT NULL,
-  recipient_id INT NOT NULL,
-  package_id INT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (courier_id) REFERENCES courier(id),
-  FOREIGN KEY (recipient_id) REFERENCES recipient(id),
-  FOREIGN KEY (package_id) REFERENCES package(id)
-);
-
 INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
 VALUES
   (1, 25.00, '2023-04-01', 1, 3, 5),
@@ -180,22 +207,6 @@ VALUES
   (4, 18.75, '2023-04-04', 3, 1, 4),
   (5, 10.00, '2023-04-05', 2, 5, 2);
 
-
-
-CREATE TABLE recipient (
-  id INT PRIMARY KEY,
-  FOREIGN KEY (id) REFERENCES customer(cust_id),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-  CREATE TABLE vehicle (
-  id INT PRIMARY KEY,
-  make VARCHAR(50),
-  model VARCHAR(50),
-  year INT,
-  license_plate VARCHAR(20),
-  type VARCHAR(50)
-);
 
 INSERT INTO vehicle (id, make, model, year, license_plate, type)
 VALUES
@@ -210,15 +221,6 @@ VALUES
   (9, 'Audi', 'Q5', 2019, 'YZA567', 'SUV'),
   (10, 'Tesla', 'Model S', 2020, 'BCD890', 'Sedan');
 
-
--- Create the "delivery_rates" table
-CREATE TABLE delivery_rates (
-  rate_id INT PRIMARY KEY,
-  courier_id INT NOT NULL,
-  package_weight DECIMAL(10, 2) NOT NULL,
-  delivery_rate DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (courier_id) REFERENCES couriers (courier_id)
-);
 
 
 GO
