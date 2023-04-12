@@ -37,6 +37,26 @@ CREATE TABLE Package(
 	price DECIMAL(10,2) NOT NULL
 );
 
+CREATE TABLE DeliveryInformation(
+	deliveryID INT NOT NULL,
+	deliveryDate DATE NOT NULL
+);
+
+CREATE TABLE recieptAddress(
+	customerID INT NOT NULL,
+	street VARCHAR(100) NOT NULL,
+	houseNumber VARCHAR(20) NOT NULL,
+	city VARCHAR(70) NOT NULL,
+	country VARCHAR(70) NOT NULL
+);
+
+CREATE TABLE courier(
+	vehicleID INT NOT NULL,
+	courierID INT NOT NULL,
+	licenseNumber VARCHAR(100) NOT NULL
+);
+
+
 -- Insert rows into table 'Courier'
 INSERT INTO dbo.Courier VALUES
    ( 1, N'Orlando', N'August', N'+233507384211'),
