@@ -4,10 +4,10 @@
 
 require 'vendor/autoload.php';
 
-define("DATABASE", "mydatabase");
-define("SERVER", "mongodb://localhost:27017");
-define("USERNAME", "myusername");
-define("PASSWORD", "mypassword");
+define("DATABASE", "deliveryBees");
+define("SERVER", "mongodb://localhost:...");
+define("USERNAME", "root");
+define("PASSWORD", "wedeliver");
 
 // Create a MongoDB client instance
 $uri = SERVER;
