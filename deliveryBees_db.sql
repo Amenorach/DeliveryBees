@@ -57,6 +57,8 @@ CREATE TABLE courier(
 );
 
 
+                            --DATABASE POPULATION--
+
 -- Insert rows into table 'Courier'
 INSERT INTO dbo.Courier VALUES
    ( 1, N'Orlando', N'August', N'+233507384211'),
