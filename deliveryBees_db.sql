@@ -134,5 +134,91 @@ INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (8,8,"Online");
 INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (9,9,"In-person");  
 INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (10,10,"Online");  
  
+CREATE TABLE customer (
+  cust_id INT PRIMARY KEY,
+  cust_fname VARCHAR(50) NOT NULL,
+  cust_lname VARCHAR(50) NOT NULL,
+  cust_email VARCHAR(100) NOT NULL,
+  cust_phone VARCHAR(20),
+  address VARCHAR(200),
+);
+
+INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address)
+VALUES
+  (1, 'John', 'Doe', 'johndoe@example.com', '555-1234', '123 Main St, Anytown USA'),
+  (2, 'Jane', 'Smith', 'janesmith@example.com', '555-5678', '456 Oak St, Anytown USA'),
+  (3, 'Bob', 'Johnson', 'bjohnson@example.com', '555-9012', '789 Elm St, Anytown USA'),
+  (4, 'Mary', 'Brown', 'mbrown@example.com', '555-3456', '234 Pine St, Anytown USA'),
+  (5, 'Tom', 'Jones', 'tjones@example.com', '555-7890', '567 Maple St, Anytown USA'),
+  (6, 'Sara', 'Lee', 'slee@example.com', '555-2345', '890 Cherry St, Anytown USA'),
+  (7, 'David', 'Nguyen', 'davidnguyen@example.com', '555-6789', '1234 Elmwood Ave, Anytown USA'),
+  (8, 'Lisa', 'Kim', 'lisakim@example.com', '555-4321', '5678 Oakwood Blvd, Anytown USA'),
+  (9, 'Emily', 'Garcia', 'emilygarcia@example.com', '555-8765', '9012 Pine St, Anytown USA'),
+  (10, 'Mark', 'Taylor', 'marktaylor@example.com', '555-2109', '3456 Maple Ave, Anytown USA');
+
+
+
+
+CREATE TABLE payment (
+  id INT PRIMARY KEY,
+  amount DECIMAL(10,2) NOT NULL,
+  payment_date DATE NOT NULL,
+  courier_id INT NOT NULL,
+  recipient_id INT NOT NULL,
+  package_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (courier_id) REFERENCES courier(id),
+  FOREIGN KEY (recipient_id) REFERENCES recipient(id),
+  FOREIGN KEY (package_id) REFERENCES package(id)
+);
+
+INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
+VALUES
+  (1, 25.00, '2023-04-01', 1, 3, 5),
+  (2, 20.00, '2023-04-02', 2, 4, 6),
+  (3, 15.50, '2023-04-03', 1, 2, 3),
+  (4, 18.75, '2023-04-04', 3, 1, 4),
+  (5, 10.00, '2023-04-05', 2, 5, 2);
+
+
+
+CREATE TABLE recipient (
+  id INT PRIMARY KEY,
+  FOREIGN KEY (id) REFERENCES customer(cust_id),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+  CREATE TABLE vehicle (
+  id INT PRIMARY KEY,
+  make VARCHAR(50),
+  model VARCHAR(50),
+  year INT,
+  license_plate VARCHAR(20),
+  type VARCHAR(50)
+);
+
+INSERT INTO vehicle (id, make, model, year, license_plate, type)
+VALUES
+  (1, 'Toyota', 'Corolla', 2018, 'ABC123', 'Sedan'),
+  (2, 'Honda', 'Civic', 2020, 'DEF456', 'Sedan'),
+  (3, 'Ford', 'F-150', 2015, 'GHI789', 'Truck'),
+  (4, 'Chevrolet', 'Equinox', 2019, 'JKL012', 'SUV'),
+  (5, 'Jeep', 'Wrangler', 2021, 'MNO345', 'SUV'),
+  (6, 'BMW', 'X5', 2017, 'PQR678', 'SUV'),
+  (7, 'Mercedes-Benz', 'E-Class', 2016, 'STU901', 'Sedan'),
+  (8, 'Nissan', 'Altima', 2022, 'VWX234', 'Sedan'),
+  (9, 'Audi', 'Q5', 2019, 'YZA567', 'SUV'),
+  (10, 'Tesla', 'Model S', 2020, 'BCD890', 'Sedan');
+
+
+-- Create the "delivery_rates" table
+CREATE TABLE delivery_rates (
+  rate_id INT PRIMARY KEY,
+  courier_id INT NOT NULL,
+  package_weight DECIMAL(10, 2) NOT NULL,
+  delivery_rate DECIMAL(10, 2) NOT NULL,
+  FOREIGN KEY (courier_id) REFERENCES couriers (courier_id)
+);
+
 
 GO
