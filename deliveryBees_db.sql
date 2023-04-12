@@ -74,6 +74,8 @@ CREATE TABLE payment (
   FOREIGN KEY (courier_id) REFERENCES courier(id),
   FOREIGN KEY (recipient_id) REFERENCES recipient(id),
   FOREIGN KEY (package_id) REFERENCES package(id)
+  on update cascade
+  on delete cascade
 );
 
 
