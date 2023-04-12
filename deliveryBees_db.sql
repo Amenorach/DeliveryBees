@@ -26,9 +26,7 @@ CREATE TABLE dbo.SenderAddress(
 	City VARCHAR (50)  NOT NULL,
 	Country   CHAR (50)  NOT NULL,
 	CustomerID int FOREIGN KEY REFERENCES Customer(CustomerID),
-
 );
-
 
 
 -- Insert rows into table 'Courier'
