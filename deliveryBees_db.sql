@@ -26,7 +26,6 @@ CREATE TABLE dbo.SenderAddress(
 	City VARCHAR (50)  NOT NULL,
 	Country   CHAR (50)  NOT NULL,
 	CustomerID int FOREIGN KEY REFERENCES Customer(CustomerID),
-
 );
 
 CREATE TABLE Package(
@@ -37,27 +36,6 @@ CREATE TABLE Package(
 	pWeight DECIMAL(10,2) NOT NULL,
 	price DECIMAL(10,2) NOT NULL
 );
-
-CREATE TABLE DeliveryInformation(
-	deliveryID INT NOT NULL,
-	deliveryDate DATE NOT NULL
-);
-
-CREATE TABLE recieptAddress(
-	recieptAddressID INT NOT NULL,
-	street VARCHAR(100) NOT NULL,
-	houseNumber VARCHAR(20) NOT NULL,
-	city VARCHAR(70) NOT NULL,
-	country VARCHAR(70) NOT NULL
-);
-
-CREATE TABLE courier(
-	vehicleID INT NOT NULL,
-	courierID INT NOT NULL,
-	licenseNumber VARCHAR(100) NOT NULL
-);
-
--- DATABASE POPULATION --
 
 -- Insert rows into table 'Courier'
 INSERT INTO dbo.Courier VALUES
