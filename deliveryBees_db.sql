@@ -108,6 +108,96 @@ CREATE TABLE courier(
 	licenseNumber VARCHAR(100) NOT NULL
 );
 
+-- CONSTRAINTS--
+--
+-- Constraints for table `dbo.Courier`
+--
+ALTER TABLE dbo.Courier
+ADD CONSTRAINT PK_Courier PRIMARY KEY (CourierId);
+
+--
+-- Constraints for table `customer`
+--
+ALTER TABLE customer
+ADD CONSTRAINT PK_Customer PRIMARY KEY (cust_id),
+    CONSTRAINT UQ_cust_email UNIQUE (cust_email),
+    CONSTRAINT CHK_cust_phone CHECK (cust_phone LIKE '[0-9]%');
+
+--
+-- Constraints for table ` dbo.SenderAddress`
+--
+ALTER TABLE dbo.SenderAddress
+ADD CONSTRAINT FK_SenderAddress_Customer FOREIGN KEY (CustomerID)
+    REFERENCES customer(cust_id);
+
+
+--
+-- Constraints for table `Package`
+--
+ALTER TABLE Package
+ADD CONSTRAINT PK_Package PRIMARY KEY (packageID),
+    CONSTRAINT FK_Package_DeliveryInformation FOREIGN KEY (deliveryID)
+        REFERENCES DeliveryInformation(deliveryID),
+    CONSTRAINT FK_Package_Courier FOREIGN KEY (courierID)
+        REFERENCES Courier(CourierId),
+    CONSTRAINT FK_Package_RecipientAddress FOREIGN KEY (recipientAddressID)
+        REFERENCES recipientAddress(customerID, street, houseNumber, city, country);
+
+
+--
+-- Constraints for table `recipient`
+--
+ALTER TABLE recipient
+ADD CONSTRAINT PK_recipient PRIMARY KEY (id),
+    CONSTRAINT FK_recipient_Customer FOREIGN KEY (id)
+        REFERENCES customer(cust_id),
+    CONSTRAINT DF_recipient_created_at DEFAULT CURRENT_TIMESTAMP FOR created_at;
+
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE payment
+ADD CONSTRAINT PK_payment PRIMARY KEY (id),
+    CONSTRAINT NN_payment_amount CHECK (amount IS NOT NULL),
+    CONSTRAINT NN_payment_date CHECK (payment_date IS NOT NULL),
+    CONSTRAINT FK_payment_Courier FOREIGN KEY (courier_id)
+        REFERENCES courier(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_payment_Recipient FOREIGN KEY (recipient_id)
+        REFERENCES recipient(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT FK_payment_Package FOREIGN KEY (package_id)
+        REFERENCES package(packageID) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT DF_payment_created_at DEFAULT CURRENT_TIMESTAMP FOR created_at;
+
+
+--
+-- Constraints for table `vehicle`
+--
+ALTER TABLE vehicle
+ADD CONSTRAINT PK_vehicle PRIMARY KEY (id);
+
+--
+-- Constraints for table `DeliveryInformation`
+--
+ALTER TABLE DeliveryInformation
+ADD CONSTRAINT PK_DeliveryInformation PRIMARY KEY (deliveryID);
+
+
+--
+-- Constraints for table `recipientAddress`
+--
+ALTER TABLE recipientAddress
+ADD CONSTRAINT PK_recipientAddress PRIMARY KEY (customerID, street, houseNumber, city, country);
+
+
+--
+-- Constraints for table `courier`
+--
+ALTER TABLE courier
+ADD CONSTRAINT PK_courier PRIMARY KEY (vehicleID, courierID),
+    CONSTRAINT UQ_courier_licenseNumber UNIQUE (licenseNumber);
+
+--
 
                             --DATABASE POPULATION--
 
