@@ -209,7 +209,7 @@ INSERT INTO dbo.Courier VALUES
    ( 4, N'Judas', N'Nti', N'+2332423943320'),
    ( 5, N'Basil', N'Asamoah', N'+2332400567799');
 
-   INSERT INTO dbo.SenderAddress VALUES
+INSERT INTO dbo.SenderAddress VALUES
    ( N'Outer Ring Road 1', N'OR1', N'Accra'),
    ( N'Ablekuma South', N'AS02', N'Tema'),
    ( N'1st Circular Road', N'645CR', N'Accra Central'),
