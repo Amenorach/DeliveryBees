@@ -314,6 +314,28 @@ VALUES
   (9, 'Audi', 'Q5', 2019, 'YZA567', 'SUV'),
   (10, 'Tesla', 'Model S', 2020, 'BCD890', 'Sedan');
 
-
+-- Query that keeps track of invoices and billings based on the delivery services rendered
+SELECT 
+    c.cust_fname,
+    c.cust_lname,
+    p.price,
+    di.deliveryDate,
+    COUNT(DISTINCT pa.packageID) AS num_packages,
+    SUM(p.price) AS total_billing
+FROM 
+    customer c
+    INNER JOIN sender s ON c.cust_id = s.CustomerID
+    INNER JOIN senderAddress sa ON c.cust_id = sa.CustomerID
+    INNER JOIN package pa ON s.CustomerID = pa.deliveryID
+    INNER JOIN courier co ON pa.courierID = co.courierID
+    INNER JOIN DeliveryInformation di ON pa.deliveryID = di.deliveryID
+    INNER JOIN payment p ON pa.packageID = p.package_id
+GROUP BY 
+    c.cust_fname,
+    c.cust_lname,
+    p.price,
+    di.deliveryDate
+ORDER BY 
+    total_billing DESC;
 
 GO
