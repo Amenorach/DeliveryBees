@@ -347,4 +347,12 @@ ORDER BY total_price DESC;
 -- ORDER BY 
 --     total_billing DESC;
 
+-- an sql query which manages the inventory packages such as the package type, the weight and size etc
+SELECT Package.packageID, Package.pWeight, Package.price, Package.packageType, Package.packageSize
+FROM Package
+INNER JOIN Inventory ON Package.packageID = Inventory.packageID
+WHERE Package.packageSize > 10 AND Inventory.quantity > 0
+ORDER BY Package.price DESC;
+
+
 GO
