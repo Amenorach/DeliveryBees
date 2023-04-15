@@ -222,53 +222,59 @@ INSERT INTO dbo.Courier VALUES
    ( N'Emmause Lane', N'78EL89', N'Community 25')
 
 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (1,"lioness","North","130 kg","40 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (2,"tiger","South","246 kg","58 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (3,"lion","North","190 kg","40 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (4,"cheetah","East","65 kg","25 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (5,"leopard","East","31 kg","20 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (6,"jaguar","East","90 kg","30 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (7,"puma","West","93 kg","31 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (8,"tiger","South","246 kg","58 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (9,"panther","West","88 kg","29 kg"); 
-INSERT INTO Package(packageID, deliveryID, courierID, recipientAddressID, pWeight, price) VALUES (10,"lion","North","190 kg","40 kg"); 
+INSERT INTO Package (packageID, deliveryID, courierID, recipientAddressID, pWeight, price)
+VALUES
+(1, 101, 201, 301, 1.5, 25.99),
+(2, 102, 202, 302, 2.3, 35.50),
+(3, 103, 203, 303, 0.8, 20.00),
+(4, 104, 204, 304, 3.6, 48.75),
+(5, 105, 205, 305, 1.2, 22.00),
+(6, 106, 206, 306, 4.1, 55.25),
+(7, 107, 207, 307, 0.5, 15.99),
+(8, 108, 208, 308, 2.5, 40.00),
+(9, 109, 209, 309, 3.2, 45.75),
+(10, 110, 210, 310, 1.8, 30.50);
+
+INSERT INTO DeliveryInformation (deliveryID, deliveryDate)
+VALUES
+(101, '2023-04-16'),
+(102, '2023-04-17'),
+(103, '2023-04-18'),
+(104, '2023-04-19'),
+(105, '2023-04-20'),
+(106, '2023-04-21'),
+(107, '2023-04-22'),
+(108, '2023-04-23'),
+(109, '2023-04-24'),
+(110, '2023-04-25');
 
 
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (1,1,"Online");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (2,2,"Online");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (3,3,"In-person");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (4,4,"Online");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (5,5,"In-person");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (6,6,"In-person");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (7,7,"In-person");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (8,8,"Online");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (9,9,"In-person");  
-INSERT INTO DeliveryInformation(deliveryID, deliveryDate) VALUES (10,10,"Online");  
+INSERT INTO recipientAddress (customerID, street, houseNumber, city, country)
+VALUES 
+(1001, 'Oxford Street', '123', 'Accra', 'Ghana'),
+(1002, 'Labadi Road', '456', 'Tema', 'Ghana'),
+(1003, 'Ring Road Central', '789', 'Kumasi', 'Ghana'),
+(1004, 'Beach Road', '1011', 'Cape Coast', 'Ghana'),
+(1005, 'North Ridge', '1213', 'Tamale', 'Ghana'),
+(1006, 'Adenta-Frafraha', '1415', 'Adenta', 'Ghana'),
+(1007, 'Spintex Road', '1617', 'Teshie', 'Ghana'),
+(1008, 'Kwame Nkrumah Avenue', '1819', 'Sekondi-Takoradi', 'Ghana'),
+(1009, 'Kofi Annan Street', '2021', 'Sunyani', 'Ghana'),
+(1010, 'Asafo Roundabout', '2223', 'Koforidua', 'Ghana');
 
 
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Kwame Ato","+233554327586","Burma Camp - Accra","Speedy");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Lizbeth Cole","+233574827586","Awosie - Accra","Calcius");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Mary Otchere","+233248576586","Airport Residential Area - Accra","Kiera");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Yaw Kross","+233244327586","Spintex - Accra","Infinity");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Delilah Jones","+233234757586","Teshie Nungua - Accra","Amba");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Vera Akwei","+233559748328","Dansoman(SSNIT) - Accra","Bridge"); 
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("John Kennedy","+23323982785","Tse-Addo - Accra", "Killer");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Eyram Adjovi","+233279823579","Trassaco-Valley(Plot 1) - Accra","Ariel");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Nii Amon Atukweifio","+233268794125","Ashongmang Estate - Accra","Aliki");  
-INSERT INTO recipientAddress(recipientAddressID, street, houseNumber, city, country) VALUES ("Erica Sackey","+233279842578","East-Airport - Accra","Corvette"); 
- 
-
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (1,1,"Online");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (2,2,"Online");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (3,3,"In-person");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (4,4,"Online");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (5,5,"In-person");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (6,6,"In-person");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (7,7,"In-person");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (8,8,"Online");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (9,9,"In-person");  
-INSERT INTO courier(vehicleID, courierID, licenseNumber) VALUES (10,10,"Online");  
- 
+INSERT INTO courier (vehicleID, courierID, licenseNumber)
+VALUES 
+(301, 201, 'GHA-1234567'),
+(302, 202, 'GHA-9876543'),
+(303, 203, 'GHA-4561237'),
+(304, 204, 'GHA-7891234'),
+(305, 205, 'GHA-5553332'),
+(306, 206, 'GHA-7779991'),
+(307, 207, 'GHA-1114445'),
+(308, 208, 'GHA-3336668'),
+(309, 209, 'GHA-2228883'),
+(310, 210, 'GHA-4445559');
 
 
 INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address)
