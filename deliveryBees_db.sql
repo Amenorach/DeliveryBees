@@ -315,27 +315,36 @@ VALUES
   (10, 'Tesla', 'Model S', 2020, 'BCD890', 'Sedan');
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
-SELECT 
-    c.cust_fname,
-    c.cust_lname,
-    p.price,
-    di.deliveryDate,
-    COUNT(DISTINCT pa.packageID) AS num_packages,
-    SUM(p.price) AS total_billing
-FROM 
-    customer c
-    INNER JOIN sender s ON c.cust_id = s.CustomerID
-    INNER JOIN senderAddress sa ON c.cust_id = sa.CustomerID
-    INNER JOIN package pa ON s.CustomerID = pa.deliveryID
-    INNER JOIN courier co ON pa.courierID = co.courierID
-    INNER JOIN DeliveryInformation di ON pa.deliveryID = di.deliveryID
-    INNER JOIN payment p ON pa.packageID = p.package_id
-GROUP BY 
-    c.cust_fname,
-    c.cust_lname,
-    p.price,
-    di.deliveryDate
-ORDER BY 
-    total_billing DESC;
+SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
+FROM customer c
+INNER JOIN recipient r ON c.cust_id = r.id
+LEFT OUTER JOIN payment pa ON r.id = pa.recipient_id
+LEFT OUTER JOIN package p ON pa.package_id = p.packageID
+WHERE pa.payment_date > '2022-01-01'
+GROUP BY c.cust_fname, c.cust_lname
+HAVING COUNT(p.id) > 0
+ORDER BY total_price DESC;
+-- SELECT 
+--     c.cust_fname,
+--     c.cust_lname,
+--     p.price,
+--     di.deliveryDate,
+--     COUNT(DISTINCT pa.packageID) AS num_packages,
+--     SUM(p.price) AS total_billing
+-- FROM 
+--     customer c
+--     INNER JOIN sender s ON c.cust_id = s.CustomerID
+--     INNER JOIN senderAddress sa ON c.cust_id = sa.CustomerID
+--     INNER JOIN package pa ON s.CustomerID = pa.deliveryID
+--     INNER JOIN courier co ON pa.courierID = co.courierID
+--     INNER JOIN DeliveryInformation di ON pa.deliveryID = di.deliveryID
+--     INNER JOIN payment p ON pa.packageID = p.package_id
+-- GROUP BY 
+--     c.cust_fname,
+--     c.cust_lname,
+--     p.price,
+--     di.deliveryDate
+-- ORDER BY 
+--     total_billing DESC;
 
 GO
