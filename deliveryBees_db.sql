@@ -71,9 +71,9 @@ CREATE TABLE recipient (
 CREATE TABLE DeliveryInformation(
 	deliveryID INT NOT NULL PRIMARY KEY,
 	deliveryDate DATE NOT NULL,
-    deliverystatus enum ("at the warehouse","In transit", "Delivered"),
-    CourierId INT,
-    FOREIGN KEY (CourierId) REFERENCES Courier (CourierId)
+  deliverystatus enum ("at the warehouse","In transit", "Delivered"),
+  CourierId INT,
+  FOREIGN KEY (CourierId) REFERENCES Courier (CourierId)
 );
 
 CREATE TABLE recipientAddress(
