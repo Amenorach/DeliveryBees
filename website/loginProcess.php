@@ -1,8 +1,6 @@
 <?php
 include("../controllers/contact_controller.php");
 
-
-
 if(isset($_POST['loginButton'])){
     $email=$_POST['cust_email'];
     $unencryptpass=$_POST['cust_pass'];

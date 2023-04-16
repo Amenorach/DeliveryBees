@@ -25,8 +25,8 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="../website/homepage.php" class="nav-link px-2 text-dark">Home</a></li>
-                    <li><a href="../website/about.php" class="nav-link px-2 text-white">About Us</a></li>
+                    <li><a href="../website/homepage.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="../website/about.php" class="nav-link px-2 text-dark">About Us</a></li>
                 </ul>
 
                 <div class="text-end">
@@ -77,12 +77,12 @@
                             hair shampoo and neutralizing shampoo with 5.5 Ph balance, Hair conditioner with shea butter, leave-in conditioner,<br>
                             car shampoo with wax, setting lotion, hair food with Indian hemp and chebe seeds, African black soap
                             body wash with honey, assorted handmade soaps{carrot, oats, avocado, oats, shea butter etc.} herbal based body lotions, Detergents, washing powder, and medicated soaps for acne and dark spots.<br>
-                        </strong> 
-                         
+                        </strong>
+
                         <br>
                         We are a member of Ghana Export Promotion Authority (GEPA) and other institutions that promote local trade and SMEs. <br>
                         We Look at the future while surrounding our clients with the best products on the market, filled with nature, love. <br>
-                        We intend to market our products nationwide and partake in trade fairs both locally and internationally. 
+                        We intend to market our products nationwide and partake in trade fairs both locally and internationally.
                         <strong> This is our way of building a better world. </strong>
                     </p>
                 </div>
@@ -107,19 +107,17 @@
                             <div class="col-2">
                                 <h4>Navigation</h4>
                                 <ul class="nav flex-column">
-                                    <li class="nav-item mb-2"><a href="../index.php" class="nav-link p-0 text-muted">Home</a></li>
-                                    <li class="nav-item mb-2"><a href="about.php" class="nav-link p-0 text-muted">About</a></li>
-                                    <li class="nav-item mb-2"><a href="shop.php" class="nav-link p-0 text-muted">Shop</a></li>
-                                    <li class="nav-item mb-2"><a href="contactUs.php" class="nav-link p-0 text-muted">Contact Us</a></li>
+                                    <li class="nav-item mb-2"><a href="./homepage.php" class="nav-link p-0 text-muted">Home</a></li>
+                                    <li class="nav-item mb-2"><a href="./about.php" class="nav-link p-0 text-muted">About</a></li>
                                 </ul>
                             </div>
 
                             <div class="col-2">
                                 <h4>Contact Us</h4>
                                 <ul class="nav flex-column">
-                                    <li class="nav-item mb-2"><a href="mailto:neanama@gmail.com" class="nav-link p-0 text-muted">neanama@gmail.com</a></li>
-                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Tel: (+233) 24 426 2700</a></li>
-                                    <li class="nav-item mb-2"><a href="http://v6.ashesi.edu.gh/about/contact-us.html" class="nav-link p-0 text-muted">Location: Dansoman, <br> Accra-Ghana</a></li>
+                                    <li class="nav-item mb-2"><a href="mailto:deliveryBees@gmail.com" class="nav-link p-0 text-muted">deliveryBees@gmail.com</a></li>
+                                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Tel: (+233) 24 756 9999</a></li>
+                                    <li class="nav-item mb-2"><a href="http://v6.ashesi.edu.gh/about/contact-us.html" class="nav-link p-0 text-muted">Location: Berekuso, <br> Eastern-Ghana</a></li>
                                 </ul>
                             </div>
 

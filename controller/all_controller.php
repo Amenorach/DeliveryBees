@@ -27,6 +27,7 @@ function add_newsletrecord_ctr($mailname)
     return $class_instance->add_newsletrecord_cls($mailname);
 }
 
+
 // function addcustomer_ctr($name, $email, $pass, $country, $city, $contact, $role){
 // //run instance
 // $add_customer = new ContactPhoneClass();

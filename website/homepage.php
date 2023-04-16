@@ -92,7 +92,7 @@
 
         <hr class="featurette-divider">
 
-        
+
         <div class="container py-4">
 
             <div class="p-5 mb-4 bg-light border rounded-3" style="background-image: url('../images/shaking.jpeg');">
@@ -134,19 +134,17 @@
                     <div class="col-2">
                         <h4>Navigation</h4>
                         <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="../index.php" class="nav-link p-0 text-muted">Home</a></li>
-                            <li class="nav-item mb-2"><a href="about.php" class="nav-link p-0 text-muted">About</a></li>
-                            <li class="nav-item mb-2"><a href="shop.php" class="nav-link p-0 text-muted">Shop</a></li>
-                            <li class="nav-item mb-2"><a href="contactUs.php" class="nav-link p-0 text-muted">Contact Us</a></li>
+                            <li class="nav-item mb-2"><a href="./homepage.php" class="nav-link p-0 text-muted">Home</a></li>
+                            <li class="nav-item mb-2"><a href="./about.php" class="nav-link p-0 text-muted">About</a></li>
                         </ul>
                     </div>
 
                     <div class="col-2">
                         <h4>Contact Us</h4>
                         <ul class="nav flex-column">
-                            <li class="nav-item mb-2"><a href="mailto:neanama@gmail.com" class="nav-link p-0 text-muted">neanama@gmail.com</a></li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Tel: (+233) 24 426 2700</a></li>
-                            <li class="nav-item mb-2"><a href="http://v6.ashesi.edu.gh/about/contact-us.html" class="nav-link p-0 text-muted">Location: Dansoman, <br> Accra-Ghana</a></li>
+                            <li class="nav-item mb-2"><a href="mailto:deliveryBees@gmail.com" class="nav-link p-0 text-muted">deliveryBees@gmail.com</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Tel: (+233) 24 756 9999</a></li>
+                            <li class="nav-item mb-2"><a href="http://v6.ashesi.edu.gh/about/contact-us.html" class="nav-link p-0 text-muted">Location: Berekuso, <br> Eastern-Ghana</a></li>
                         </ul>
                     </div>
 
