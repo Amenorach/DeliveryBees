@@ -26,6 +26,7 @@ CREATE TABLE customer (
   cust_email VARCHAR(100) NOT NULL,
   cust_phone VARCHAR(20),
   address VARCHAR (50),
+  cust_pass VARCHAR (40) NOT NULL,
   user_role int(11) NOT NULL
 );
 
@@ -168,18 +169,18 @@ ADD CONSTRAINT UQ_courier_licenseNumber UNIQUE (licenseNumber);
 --
 -- DATABASE POPULATION--
 
-INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address, user_role)
+INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address, cust_pass, user_role)
 VALUES
-  (1, 'Kwame', 'Appiah', 'kwame.appiah@example.com', '0241234567', '123 Main St, Accra' , 1),
-  (2, 'Adjoa', 'Boateng', 'adjoa.boateng@example.com', '0272345678', '456 Oak St, Kumasi', 2),
-  (3, 'Yaw', 'Kwakye', 'yaw.kwakye@example.com', '0203456789', '789 Elm St, Cape Coast', 1),
-  (4, 'Akua', 'Owusu', 'akua.owusu@example.com', '0244567890', '234 Pine St, Tamale', 1),
-  (5, 'Kofi', 'Addo', 'kofi.addo@example.com', '0545678901', '567 Maple St, Takoradi', 1),
-  (6, 'Esi', 'Adu', 'esi.adu@example.com', '0246789012', '890 Cherry St, Accra', 1),
-  (7, 'Yaw', 'Asante', 'yaw.asante@example.com', '0277890123', '1234 Elmwood Ave, Kumasi', 2),
-  (8, 'Ama', 'Mensah', 'ama.mensah@example.com', '0209012345', '5678 Oakwood Blvd, Cape Coast', 1),
-  (9, 'Kwesi', 'Addae', 'kwesi.addae@example.com', '0540123456', '9012 Pine St, Tamale', 1),
-  (10, 'Abena', 'Osei', 'abena.osei@example.com', '0243456789', '3456 Maple Ave, Takoradi', 2);
+  (1, 'Kwame', 'Appiah', 'kwame.appiah@example.com', '0241234567', '123 Main St, Accra' , qwerty , 1),
+  (2, 'Adjoa', 'Boateng', 'adjoa.boateng@example.com', '0272345678', '456 Oak St, Kumasi', 123456, 2),
+  (3, 'Yaw', 'Kwakye', 'yaw.kwakye@example.com', '0203456789', '789 Elm St, Cape Coast', asdfg, 1),
+  (4, 'Akua', 'Owusu', 'akua.owusu@example.com', '0244567890', '234 Pine St, Tamale', twenty, 1),
+  (5, 'Kofi', 'Addo', 'kofi.addo@example.com', '0545678901', '567 Maple St, Takoradi', 67890, 1),
+  (6, 'Esi', 'Adu', 'esi.adu@example.com', '0246789012', '890 Cherry St, Accra', tryme1, 1),
+  (7, 'Yaw', 'Asante', 'yaw.asante@example.com', '0277890123', '1234 Elmwood Ave, Kumasi', thankgod, 2),
+  (8, 'Ama', 'Mensah', 'ama.mensah@example.com', '0209012345', '5678 Oakwood Blvd, Cape Coast', pineapple, 1),
+  (9, 'Kwesi', 'Addae', 'kwesi.addae@example.com', '0540123456', '9012 Pine St, Tamale', myphone, 1),
+  (10, 'Abena', 'Osei', 'abena.osei@example.com', '0243456789', '3456 Maple Ave, Takoradi', yourlove, 2);
 
 INSERT INTO recipient (recipientID, customerID) VALUES
   (1, 1),

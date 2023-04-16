@@ -1,33 +1,42 @@
 <?php
-session_start();
+include("../controllers/contact_controller.php");
 
-include("../controller/all_controller.php");
 
-//for login
-if (isset($_POST['loginButton'])) {
 
-    $email = $_POST['customer_email'];
-    $password = $_POST['customer_pass'];
+if(isset($_POST['loginButton'])){
+    $email=$_POST['cust_email'];
+    $unencryptpass=$_POST['cust_pass'];
 
-    // Checking if email is in database. Retunns user data if it exists or false of it doesnt
-    $result = getUserDetailsByEmail_ctr($email);
 
-    // If the result if true
-    if ($result) {
-        // Get the user password from the array that is returned
-        $user_password = $result['customer_pass'];
-        // Verify the hash against the password entered
-        $verify = password_verify($password, $user_password);
-        // Compare if the user's input matches what is in the database. If true redirect to index page. if false echo failed.
-        if ($verify) {
-            $_SESSION['customer_email'] = $result['customer_email'];
-            $_SESSION['customer_id'] = $result['customer_id'];
-            header("Location: homepage.php");
-        } else {
-            header("location: ../errors/failLog.php");
+    if(getUserDetailsByEmail_ctr($email)!=false){
+        
+        $result=getUserDetailsByEmail_ctr($email);
+        $encryptpass=$result['cust_pass'];
+        if($verify){
+            session_start();
+            $_SESSION['cust_id']=$result['customer_id'];
+            $_SESSION['cust_fname']=$result['customer_fname'];
+            $_SESSION['cust_lname']=$result['customer_lname'];
+            $_SESSION['cust_email']=$result['customer_email'];
+            $_SESSION['user_role']=$result['user_role'];
+            if ($_SESSION['user_role'] == 2) {
+                header('location: ../admin/tables.php');
+                } else if($_SESSION['user_role'] == 1) {
+                    header('location: ../website/homepage.php');
+                }
+        
         }
-    } else {
-        header("location: ../errors/loginerror.php");
+        else{
+            session_start();
+            $_SESSION['error'] = 'Invalid login details!';		
+            header('Location:../website/login.php');
+        }
     }
 }
+else {
+	
+	header('Location:../website/login.php');
+}
+
+
 ?>
