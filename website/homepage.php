@@ -39,7 +39,7 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="../website/homepage.php" class="nav-link px-2 text-dark">Home</a></li>
-                    <li><a href="../website/about.php" class="nav-link px-2 text-white">Tables</a></li>
+                    <li><a href="../website/about.php" class="nav-link px-2 text-white">About Us</a></li>
                 </ul>
 
                 <div class="text-end">
@@ -58,24 +58,24 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../images/del.png" class="d-block w-100" alt="Light skin girl with brown hair">
+                    <img src="../images/del.png" class="d-block w-100" alt="">
                     <div class="carousel-caption d-none d-md-block text-dark">
                         <h4><strong>DELIVERY RIGHT AT YOUR DOORSTEP</strong></h4>
                         <p><strong>We Deliver Anything & Everything At Very Bugdget-Frendly Rates, Our Priority Is Your Comfort.</strong></p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../images/kids.jpg" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
+                    <img src="../images/del2.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block text-dark">
                         <h4><strong>WE INSPIRE LOVE</strong></h4>
-                        <p><strong>We Do Our Best To Ensure No One Is Left Out In Trying Our Products.</strong></p>
+                        <p><strong>We Do Our Best To Ensure No One Is Delayed When Expecting Deliveries.</strong></p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../images/dark.PNG" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4><strong>CONFIDENCE MADE EASY</strong></h4>
-                        <p><strong>Our Products Boost The Confidence Levels In Our Loved Customers Due To Their Great Skin!</strong></p>
+                    <img src="../images/del3.jpeg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block ">
+                        <h4><strong class="text-dark">CONFIDENCE MADE EASY</strong></h4>
+                        <p><strong>Our Delivery System Has Boosted The Confidence Levels In Our Loved Customers Due To Our Performance Over Time!</strong></p>
                     </div>
                 </div>
             </div>
@@ -89,64 +89,17 @@
             </button>
         </div>
 
-        <!-- START THE FEATURETTES -->
 
         <hr class="featurette-divider">
 
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">We Care About You. <span class="text-muted">And Your Skin Also.</span></h2>
-                <p class="lead">In Our Hands, You Are Rest Assured That Your Skin Will Smile All The Time.<br> Stay Natural. Using More Chemicals On Your Hair And Skin Will Only Degrade Your Hairs & Skin In The Long Run. <br> <a href="shop.php"><strong>Shop With Us</strong></a> Now To Change That Future!</p>
-            </div>
-            <div class="col-md-5">
-                <img src="../images/girls.jpg" alt="woman and child holding hands" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#eee" /><text x="50%" y="50%" fill="#aaa" dy=".3em"></text></img>
-
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading">Visit Us Today. <span class="text-muted">Check Out Our Mini-store & Warehourse.</span></h2>
-                <p class="lead">Click <a href="http://v6.ashesi.edu.gh/about/contact-us.html">here</a>, and you'll be on the fastest route to finding us successfully.</p>
-            </div>
-            <div class="col-md-5">
-                <img src="../images/pindrop.png" alt="Pin Drop" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Location</title>
-                <rect width="100%" height="100%" fill="#eee" /><text x="50%" y="50%" fill="#aaa" dy=".3em"></text></img>
-
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">You See Products, <span class="text-muted">We See Makeovers.</span></h2>
-                <p class="lead">We make and name every product with delight because we believe they take delight in making YOU over!<br> Shop, Try Them, Thank Us Later! <a href="shop.php">Click Here</a> to Shop!</p>
-            </div>
-            <div class="col-md-5">
-                <img src="../images/lightskin.jpg" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#eee" /><text x="50%" y="50%" fill="#aaa" dy=".3em"></text></img>
-
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <!-- /END THE FEATURETTES -->
-
+        
         <div class="container py-4">
 
             <div class="p-5 mb-4 bg-light border rounded-3" style="background-image: url('../images/shaking.jpeg');">
                 <div class="container-fluid py-5">
                     <h1 class="display-5 fw-bold">Shop With Us Today!</h1>
                     <p class="col-md-8 fs-4">Want to have an Unforgettable and Amazing Skin? <br> Shop With Us Today!</p>
-                    <a href="shop.php"><button class="btn btn-success btn-lg" type="button">Go To Shop</button></a>
+                    <a href="shop.php"><button class="btn btn-success btn-lg" type="button">Place A Delivery!</button></a>
                 </div>
             </div>
 
