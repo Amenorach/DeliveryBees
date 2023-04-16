@@ -1,24 +1,21 @@
-CREATE DATABASE deliveryBees;
 
-USE deliveryBees;
+USE deliverybees;
 -- Create a new table called ‘Courier Details' in schema 'dbo' --
 -- Drop the table if it already exists --
 
-IF OBJECT_ID('dbo.Courier', 'U') IS NOT NULL
-DROP TABLE dbo.Courier 
-GO
 
-CREATE TABLE dbo.Courier (
-   CourierId        INT    NOT NULL  PRIMARY KEY, 
-   Rider_fname      VARCHAR (10)  NOT NULL,
-   Rider_lname  VARCHAR(10)  NOT NULL,
-   Rider_number   NVARCHAR(30)  NOT NULL
+DROP TABLE Couriers;
+CREATE TABLE Couriers (
+   CourierId INT ,
+   FirstName VARCHAR(15),
+   LastName VARCHAR(15),
+   PhoneNumber VARCHAR(20)
 );
 
 
 -- Create the table in the specified schema--
-
-CREATE TABLE customer (
+DROP TABLE Customer;
+CREATE TABLE Customer (
   cust_id INT PRIMARY KEY,
   cust_fname VARCHAR(50) NOT NULL,
   cust_lname VARCHAR(50) NOT NULL,
@@ -26,29 +23,25 @@ CREATE TABLE customer (
   cust_phone VARCHAR(20),
 );
 
-IF OBJECT_ID('dbo.Sender', 'U') IS NOT NULL
-DROP TABLE dbo.Sender 
-GO
+DROP TABLE Sender;
+CREATE TABLE Sender (
 
-CREATE TABLE dbo.Sender (
-
-CustomerID int FOREIGN KEY REFERENCES Customer(CustomerID),
+CustomerID int FOREIGN KEY REFERENCES Customer(cust_id),
 );
 
 
-IF OBJECT_ID('dbo.SenderAddress', 'U') IS NOT NULL
-DROP TABLE dbo.SenderAddress 
-GO
-CREATE TABLE dbo.SenderAddress(
+DROP TABLE SenderAddress;
+CREATE TABLE SenderAddress(
 	Street VARCHAR (50)  NOT NULL,
-	houseNumber TINYINT(10)  NOT NULL,
+	houseNumber TINYINT  NOT NULL,
 	City VARCHAR (50)  NOT NULL,
-	Country   CHAR (50)  NOT NULL,
-	CustomerID int FOREIGN KEY REFERENCES Customer(CustomerID),
+	CustomerID int FOREIGN KEY REFERENCES Customer(cust_id),
 );
 
+
+DROP TABLE Package;
 CREATE TABLE Package(
-	packageID INT NOT NULL,
+	packageID INT NOT NULL PRIMARY KEY,
 	deliveryID INT NOT NULL,
 	courierID INT NOT NULL,
 	recipientAddressID INT NOT NULL,
@@ -56,13 +49,16 @@ CREATE TABLE Package(
 	price DECIMAL(10,2) NOT NULL
 );
 
+
+DROP TABLE recipient;
 CREATE TABLE recipient (
   id INT PRIMARY KEY,
-  FOREIGN KEY (id) REFERENCES customer(cust_id),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  FOREIGN KEY (id) REFERENCES Customer(cust_id),
+  ---created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
+DROP TABLE payment;
 CREATE TABLE payment (
   id INT PRIMARY KEY,
   amount DECIMAL(10,2) NOT NULL,
@@ -70,16 +66,16 @@ CREATE TABLE payment (
   courier_id INT NOT NULL,
   recipient_id INT NOT NULL,
   package_id INT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (courier_id) REFERENCES courier(id),
+  --created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (courier_id) REFERENCES Couriers(CourierId),
   FOREIGN KEY (recipient_id) REFERENCES recipient(id),
-  FOREIGN KEY (package_id) REFERENCES package(id)
+  FOREIGN KEY (package_id) REFERENCES Package(packageID)
   on update cascade
   on delete cascade
 );
 
 
-
+DROP TABLE vehicle;
   CREATE TABLE vehicle (
   id INT PRIMARY KEY,
   make VARCHAR(50),
@@ -89,11 +85,15 @@ CREATE TABLE payment (
   type VARCHAR(50)
 );
 
+
+DROP TABLE DeliveryInformation;
 CREATE TABLE DeliveryInformation(
 	deliveryID INT NOT NULL,
 	deliveryDate DATE NOT NULL
 );
 
+
+DROP TABLE recipientAddress;
 CREATE TABLE recipientAddress(
 	customerID INT NOT NULL,
 	street VARCHAR(100) NOT NULL,
@@ -102,31 +102,35 @@ CREATE TABLE recipientAddress(
 	country VARCHAR(70) NOT NULL
 );
 
-CREATE TABLE courier(
+
+DROP TABLE courierRider;
+CREATE TABLE courierRider(
 	vehicleID INT NOT NULL,
-	courierID INT NOT NULL,
+	courierRiderID INT NOT NULL,
 	licenseNumber VARCHAR(100) NOT NULL
 );
+
+
 
 -- CONSTRAINTS--
 --
 -- Constraints for table `dbo.Courier`
 --
-ALTER TABLE dbo.Courier
+ALTER TABLE Couriers
 ADD CONSTRAINT PK_Courier PRIMARY KEY (CourierId);
 
 --
 -- Constraints for table `customer`
 --
-ALTER TABLE customer
+ALTER TABLE Customer
 ADD CONSTRAINT PK_Customer PRIMARY KEY (cust_id),
     CONSTRAINT UQ_cust_email UNIQUE (cust_email),
     CONSTRAINT CHK_cust_phone CHECK (cust_phone LIKE '[0-9]%');
 
 --
--- Constraints for table ` dbo.SenderAddress`
+-- Constraints for table ` SenderAddress`
 --
-ALTER TABLE dbo.SenderAddress
+ALTER TABLE SenderAddress
 ADD CONSTRAINT FK_SenderAddress_Customer FOREIGN KEY (CustomerID)
     REFERENCES customer(cust_id);
 
@@ -135,13 +139,8 @@ ADD CONSTRAINT FK_SenderAddress_Customer FOREIGN KEY (CustomerID)
 -- Constraints for table `Package`
 --
 ALTER TABLE Package
-ADD CONSTRAINT PK_Package PRIMARY KEY (packageID),
-    CONSTRAINT FK_Package_DeliveryInformation FOREIGN KEY (deliveryID)
-        REFERENCES DeliveryInformation(deliveryID),
-    CONSTRAINT FK_Package_Courier FOREIGN KEY (courierID)
-        REFERENCES Courier(CourierId),
-    CONSTRAINT FK_Package_RecipientAddress FOREIGN KEY (recipientAddressID)
-        REFERENCES recipientAddress(customerID, street, houseNumber, city, country);
+ADD CONSTRAINT FK_Package_RecipientAddress FOREIGN KEY (customerID, street, houseNumber, city, country)
+    REFERENCES recipientAddress(customerID, street, houseNumber, city, country);
 
 
 --
@@ -154,7 +153,8 @@ ADD CONSTRAINT PK_recipient PRIMARY KEY (id),
     CONSTRAINT DF_recipient_created_at DEFAULT CURRENT_TIMESTAMP FOR created_at;
 
 
---
+
+
 -- Constraints for table `payment`
 --
 ALTER TABLE payment
@@ -193,36 +193,39 @@ ADD CONSTRAINT PK_recipientAddress PRIMARY KEY (customerID, street, houseNumber,
 --
 -- Constraints for table `courier`
 --
-ALTER TABLE courier
-ADD CONSTRAINT PK_courier PRIMARY KEY (vehicleID, courierID),
+ALTER TABLE courierRider
+ADD CONSTRAINT PK_courierRider PRIMARY KEY (vehicleID, courierRiderID),
     CONSTRAINT UQ_courier_licenseNumber UNIQUE (licenseNumber);
 
---
+
+
+
+
 
                             --DATABASE POPULATION--
 
 -- Insert rows into table 'Courier'
-INSERT INTO dbo.Courier VALUES
-   ( 1, N'Orlando', N'August', N'+233507384211'),
-   ( 2, N'Keith', N'Benson', N'+2332709405800'),
-   ( 3, N'Donna', N'Carlos', N'+2332648329103'),
-   ( 4, N'Judas', N'Nti', N'+2332423943320'),
-   ( 5, N'Basil', N'Asamoah', N'+2332400567799');
+INSERT INTO Couriers (CourierId, FirstName,LastName, PhoneNumber) VALUES 
+   ( 1, 'Orlando', 'August', '+233507384211'),
+   ( 2, 'Keith', 'Benson', '+2332709405800'),
+   ( 3, 'Donna', 'Carlos', '+2332648329103'),
+   ( 4, 'Judas', 'Nti', '+2332423943320'),
+   ( 5, 'Basil', 'Asamoah', '+2332400567799');
 
-INSERT INTO dbo.SenderAddress VALUES
-   ( N'Outer Ring Road 1', N'OR1', N'Accra'),
-   ( N'Ablekuma South', N'AS02', N'Tema'),
-   ( N'1st Circular Road', N'645CR', N'Accra Central'),
-   ( N'Apple Street', N'67ASJ', N'Community 23'),
-   ( N'Abidjan Avenue', N'AA456', N'Accra'),
-   ( N'Cocoa Street', N'9078CS', N'Accra'),
-   ( N'4th Dade Street', N'67DS4', N'Ga West'),
-   ( N'Link Road', N'1LR', N'Accral South'),
-   ( N'Abele Street', N'AS89', N'Community 9'),
-   ( N'Emmause Lane', N'78EL89', N'Community 25')
+   INSERT INTO SenderAddress (Street, houseNumber, City, CustomerID) VALUES
+   ( N'Outer Ring Road 1', N'OR1', N'Accra',1),
+   ( N'Ablekuma South', N'AS02', N'Tema',2),
+   ( N'1st Circular Road', N'645CR', N'Accra Central',3),
+   ( N'Apple Street', N'67ASJ', N'Community 23',4),
+   ( N'Abidjan Avenue', N'AA456', N'Accra',5),
+   ( N'Cocoa Street', N'9078CS', N'Accra',6),
+   ( N'4th Dade Street', N'67DS4', N'Ga West',7),
+   ( N'Link Road', N'1LR', N'Accral South',8),
+   ( N'Abele Street', N'AS89', N'Community 9',8),
+   ( N'Emmause Lane', N'78EL89', N'Community 25',9)
 
 
-INSERT INTO Package (packageID, deliveryID, courierID, recipientAddressID, pWeight, price)
+INSERT INTO Package 
 VALUES
 (1, 101, 201, 301, 1.5, 25.99),
 (2, 102, 202, 302, 2.3, 35.50),
@@ -263,7 +266,7 @@ VALUES
 (1010, 'Asafo Roundabout', '2223', 'Koforidua', 'Ghana');
 
 
-INSERT INTO courier (vehicleID, courierID, licenseNumber)
+INSERT INTO courierRider
 VALUES 
 (301, 201, 'GHA-1234567'),
 (302, 202, 'GHA-9876543'),
@@ -275,24 +278,25 @@ VALUES
 (308, 208, 'GHA-3336668'),
 (309, 209, 'GHA-2228883'),
 (310, 210, 'GHA-4445559');
+ 
 
 
-INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address)
+INSERT INTO Customer
 VALUES
-  (1, 'John', 'Doe', 'johndoe@example.com', '555-1234', '123 Main St, Anytown USA'),
-  (2, 'Jane', 'Smith', 'janesmith@example.com', '555-5678', '456 Oak St, Anytown USA'),
-  (3, 'Bob', 'Johnson', 'bjohnson@example.com', '555-9012', '789 Elm St, Anytown USA'),
-  (4, 'Mary', 'Brown', 'mbrown@example.com', '555-3456', '234 Pine St, Anytown USA'),
-  (5, 'Tom', 'Jones', 'tjones@example.com', '555-7890', '567 Maple St, Anytown USA'),
-  (6, 'Sara', 'Lee', 'slee@example.com', '555-2345', '890 Cherry St, Anytown USA'),
-  (7, 'David', 'Nguyen', 'davidnguyen@example.com', '555-6789', '1234 Elmwood Ave, Anytown USA'),
-  (8, 'Lisa', 'Kim', 'lisakim@example.com', '555-4321', '5678 Oakwood Blvd, Anytown USA'),
-  (9, 'Emily', 'Garcia', 'emilygarcia@example.com', '555-8765', '9012 Pine St, Anytown USA'),
-  (10, 'Mark', 'Taylor', 'marktaylor@example.com', '555-2109', '3456 Maple Ave, Anytown USA');
+  (1, 'John', 'Doe', 'johndoe@example.com', '555-1234'),
+  (2, 'Jane', 'Smith', 'janesmith@example.com', '555-5678'),
+  (3, 'Bob', 'Johnson', 'bjohnson@example.com', '555-9012'),
+  (4, 'Mary', 'Brown', 'mbrown@example.com', '555-3456'),
+  (5, 'Tom', 'Jones', 'tjones@example.com', '555-7890'),
+  (6, 'Sara', 'Lee', 'slee@example.com', '555-2345'),
+  (7, 'David', 'Nguyen', 'davidnguyen@example.com', '555-6789'),
+  (8, 'Lisa', 'Kim', 'lisakim@example.com', '555-4321'),
+  (9, 'Emily', 'Garcia', 'emilygarcia@example.com', '555-8765'),
+  (10, 'Mark', 'Taylor', 'marktaylor@example.com', '555-2109');
 
 
 
-INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
+INSERT INTO payment
 VALUES
   (1, 25.00, '2023-04-01', 1, 3, 5),
   (2, 20.00, '2023-04-02', 2, 4, 6),
@@ -301,7 +305,7 @@ VALUES
   (5, 10.00, '2023-04-05', 2, 5, 2);
 
 
-INSERT INTO vehicle (id, make, model, year, license_plate, type)
+INSERT INTO vehicle
 VALUES
   (1, 'Toyota', 'Corolla', 2018, 'ABC123', 'Sedan'),
   (2, 'Honda', 'Civic', 2020, 'DEF456', 'Sedan'),
