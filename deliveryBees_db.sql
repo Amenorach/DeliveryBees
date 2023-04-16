@@ -260,16 +260,16 @@ VALUES ('Adabraka Road', 12, 'Accra', 1),
    
 INSERT INTO DeliveryInformation (deliveryID, deliveryDate, deliverystatus,courierId)
 VALUES
-(101, '2023-04-16','in transit', 1),
+(101, '2020-09-16','in transit', 1),
 (102, '2023-04-17','at the warehouse', 2),
-(103, '2023-04-18','in transit',3),
-(104, '2023-04-19', 'delivered',4),
-(105, '2023-04-20','delivered',5),
-(106, '2023-04-21','in transit',6),
-(107, '2023-04-22','at the warehouse',7),
-(108, '2023-04-23','at the warehouse',8),
-(109, '2023-04-24','at the warehouse',9),
-(110, '2023-04-25','in transit', 10);
+(103, '2019-07-11','in transit',3),
+(104, '2023-04-16', 'delivered',4),
+(105, '2023-01-20','delivered',5),
+(106, '2021-11-21','in transit',6),
+(107, '2023-04-16','at the warehouse',7),
+(108, '2023-04-16','at the warehouse',8),
+(109, '2021-04-02','at the warehouse',9),
+(110, '2022-10-25','in transit', 10);
 
 INSERT INTO Package (packageID, deliveryID, courierId, recipientAddressID, pWeight, price)
 VALUES
@@ -314,16 +314,16 @@ VALUES
 
 INSERT INTO couriervehiclerider (vehicleID, courierId, licenseNumber)
 VALUES 
-(1, 1, 'GHA-1234567'),
-(2, 2, 'GHA-9876543'),
-(3, 3, 'GHA-4561237'),
-(4, 4, 'GHA-7891234'),
-(5, 5, 'GHA-5553332'),
-(6, 6, 'GHA-7779991'),
-(7, 7, 'GHA-1114445'),
-(8, 8, 'GHA-3336668'),
-(9, 9, 'GHA-2228883'),
-(10, 10, 'GHA-4445559');
+(1, 1, 'GW-1234567-21'),
+(2, 2, 'GW-9876543-20'),
+(3, 3, 'GR-4561237-17'),
+(4, 4, 'CR-7891234-12'),
+(5, 5, 'AR-5553332-19'),
+(6, 6, 'GR-7779991-14'),
+(7, 7, 'WR-1114445-10'),
+(8, 8, 'WR-3336668-20'),
+(9, 9, 'ER-2228883-21'),
+(10, 10, 'GW-4445559-23');
 
 
 INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
@@ -346,6 +346,27 @@ VALUES
   (8, '09:10:00', '2022-11-23','11:13:10', '2022-11-23'),
   (9, '10:06:00', '2021-08-20','19:30:03', '2021-08-20'),
   (10, '09:08:00', '2021-01-30','12:40:10', '2021-01-30');
+  
+
+-- query for identifying vehicle lincense number for riders in Ga West (GW)
+SELECT vehicle.id, couriervehiclerider.licenseNumber
+FROM couriervehiclerider
+INNER JOIN vehicle ON vehicle.id = couriervehiclerider.vehicleID
+WHERE couriervehiclerider.licenseNumber LIKE 'GW%';
+
+
+-- query for delivery process, type,time delivered, reciepent and customer address
+
+SELECT DeliveryInformation.deliveryID, DeliveryInformation.deliveryDate, Courier.Rider_fname, Courier.Rider_lname , Package.price
+FROM 
+  DeliveryInformation 
+  INNER JOIN Courier ON DeliveryInformation.courierID = Courier.courierID 
+  LEFT OUTER JOIN Package ON DeliveryInformation.deliveryID = Package.deliveryID
+WHERE 
+  DeliveryInformation.deliveryDate < '2023-04-16'
+ORDER BY 
+  DeliveryInformation.deliveryDate DESC;
+
   
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
@@ -384,8 +405,4 @@ WHERE Package.pWeight > 0.05
 ORDER BY Package.pWeight DESC;
   
   
--- query for identifying vehicle lincense number for riders in Ga West (GW)
-SELECT vehicle.id, courier.licenseNumber
-FROM courier
-INNER JOIN vehicle ON vehicle.id = courier.vehicleID
-WHERE courier.licenseNumber LIKE 'GW%';
+
