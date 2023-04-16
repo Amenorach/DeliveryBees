@@ -315,15 +315,30 @@ VALUES
   (10, 'Tesla', 'Model S', 2020, 'BCD890', 'Sedan');
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
-SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
-FROM customer c
-INNER JOIN recipient r ON c.cust_id = r.id
-LEFT OUTER JOIN payment pa ON r.id = pa.recipient_id
-LEFT OUTER JOIN package p ON pa.package_id = p.packageID
-WHERE pa.payment_date > '2022-01-01'
-GROUP BY c.cust_fname, c.cust_lname
-HAVING COUNT(p.id) > 0
-ORDER BY total_price DESC;
+CREATE PROCEDURE get_customer_package_info;
+    @start_date DATE
+AS
+BEGIN
+    SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
+    FROM customer c
+    INNER JOIN recipient r ON c.cust_id = r.id
+    LEFT OUTER JOIN payment pa ON r.id = pa.recipient_id
+    LEFT OUTER JOIN package p ON pa.package_id = p.packageID
+    WHERE pa.payment_date > @start_date
+    GROUP BY c.cust_fname, c.cust_lname
+    HAVING COUNT(p.id) > 0
+    ORDER BY total_price DESC;
+END
+
+-- SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
+-- FROM customer c
+-- INNER JOIN recipient r ON c.cust_id = r.id
+-- LEFT OUTER JOIN payment pa ON r.id = pa.recipient_id
+-- LEFT OUTER JOIN package p ON pa.package_id = p.packageID
+-- WHERE pa.payment_date > '2022-01-01'
+-- GROUP BY c.cust_fname, c.cust_lname
+-- HAVING COUNT(p.id) > 0
+-- ORDER BY total_price DESC;
 -- SELECT 
 --     c.cust_fname,
 --     c.cust_lname,
