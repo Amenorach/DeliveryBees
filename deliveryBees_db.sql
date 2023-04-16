@@ -82,9 +82,10 @@ CREATE TABLE recipientAddress(
 
 CREATE TABLE courier(
 	vehicleID INT NOT NULL,
-	courierID INT NOT NULL PRIMARY KEY,
+	courierId INT NOT NULL,
 	licenseNumber VARCHAR(100) NOT NULL,
-	FOREIGN KEY (vehicleID) REFERENCES vehicle(id)
+	FOREIGN KEY (vehicleID) REFERENCES vehicle(id),
+    FOREIGN KEY (courierId) REFERENCES dboCourier(courierId)
 );
 
 CREATE TABLE Package(
@@ -179,17 +180,32 @@ VALUES
   (9, 'Kwesi', 'Addae', 'kwesi.addae@example.com', '0540123456', '9012 Pine St, Tamale'),
   (10, 'Abena', 'Osei', 'abena.osei@example.com', '0243456789', '3456 Maple Ave, Takoradi');
 
-
-
-
+INSERT INTO recipient (recipientID, customerID) VALUES
+  (1, 1),
+  (2, 2),
+  (3, 3),
+  (4, 4),
+  (5, 5),
+  (6, 6),
+  (7, 7),
+  (8, 8),
+  (9, 9),
+  (10, 10);
+  
+  
 -- Insert rows into table 'Courier'
-INSERT INTO dboCourier VALUES
+INSERT INTO dboCourier (CourierId, Rider_fname, Rider_lname, Rider_number) VALUES
    ( 1, N'Orlando', N'August', N'+233507384211'),
    ( 2, N'Keith', N'Benson', N'+2332709405800'),
    ( 3, N'Donna', N'Carlos', N'+2332648329103'),
    ( 4, N'Judas', N'Nti', N'+2332423943320'),
-   ( 5, N'Basil', N'Asamoah', N'+2332400567799');
-
+   ( 5, N'Basil', N'Asamoah', N'+2332400567799'),
+   ( 6, N'Mary', N'Smith', N'+2332709405500'),
+   ( 7, N'John', N'Doe', N'+2332648329203'),
+   ( 8, N'Jane', N'Doe', N'+2332423943321'),
+   ( 9, N'James', N'Johnson', N'+2332400567790'),
+   ( 10, N'Emily', N'Wilson', N'+2332648329107');
+   
 INSERT INTO dboSenderAddress (Street, houseNumber, City, Country, customerID)
 VALUES ('Adabraka Road', 12, 'Accra', 'Ghana', 1),
        ('Cape Coast Highway', 23, 'Cape Coast', 'Ghana', 2),
@@ -213,21 +229,7 @@ VALUES ('Adabraka Road', 12, 'Accra', 'Ghana', 1),
     --  ( N'Link Road', N'1LR', N'Accral South'),
      -- ( N'Abele Street', N'AS89', N'Community 9'),
    --   ( N'Emmause Lane', N'78EL89', N'Community 25');
-
-
-INSERT INTO Package (packageID, deliveryID, courierID, recipientAddressID, pWeight, price)
-VALUES
-(1, 101, 201, 301, 1.5, 25.99),
-(2, 102, 202, 302, 2.3, 35.50),
-(3, 103, 203, 303, 0.8, 20.00),
-(4, 104, 204, 304, 3.6, 48.75),
-(5, 105, 205, 305, 1.2, 22.00),
-(6, 106, 206, 306, 4.1, 55.25),
-(7, 107, 207, 307, 0.5, 15.99),
-(8, 108, 208, 308, 2.5, 40.00),
-(9, 109, 209, 309, 3.2, 45.75),
-(10, 110, 210, 310, 1.8, 30.50);
-
+   
 INSERT INTO DeliveryInformation (deliveryID, deliveryDate)
 VALUES
 (101, '2023-04-16'),
@@ -241,45 +243,32 @@ VALUES
 (109, '2023-04-24'),
 (110, '2023-04-25');
 
-
-INSERT INTO recipientAddress (customerID, street, houseNumber, city, country)
-VALUES 
-(1001, 'Oxford Street', '123', 'Accra', 'Ghana'),
-(1002, 'Labadi Road', '456', 'Tema', 'Ghana'),
-(1003, 'Ring Road Central', '789', 'Kumasi', 'Ghana'),
-(1004, 'Beach Road', '1011', 'Cape Coast', 'Ghana'),
-(1005, 'North Ridge', '1213', 'Tamale', 'Ghana'),
-(1006, 'Adenta-Frafraha', '1415', 'Adenta', 'Ghana'),
-(1007, 'Spintex Road', '1617', 'Teshie', 'Ghana'),
-(1008, 'Kwame Nkrumah Avenue', '1819', 'Sekondi-Takoradi', 'Ghana'),
-(1009, 'Kofi Annan Street', '2021', 'Sunyani', 'Ghana'),
-(1010, 'Asafo Roundabout', '2223', 'Koforidua', 'Ghana');
-
-
-INSERT INTO courier (vehicleID, courierID, licenseNumber)
-VALUES 
-(301, 201, 'GHA-1234567'),
-(302, 202, 'GHA-9876543'),
-(303, 203, 'GHA-4561237'),
-(304, 204, 'GHA-7891234'),
-(305, 205, 'GHA-5553332'),
-(306, 206, 'GHA-7779991'),
-(307, 207, 'GHA-1114445'),
-(308, 208, 'GHA-3336668'),
-(309, 209, 'GHA-2228883'),
-(310, 210, 'GHA-4445559');
-
-
-
-
-INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
+INSERT INTO Package (packageID, deliveryID, courierId, recipientAddressID, pWeight, price)
 VALUES
-  (1, 25.00, '2023-04-01', 1, 3, 5),
-  (2, 20.00, '2023-04-02', 2, 4, 6),
-  (3, 15.50, '2023-04-03', 1, 2, 3),
-  (4, 18.75, '2023-04-04', 3, 1, 4),
-  (5, 10.00, '2023-04-05', 2, 5, 2);
+(1, 101, 1, 301, 1.5, 25.99),
+(2, 102, 2, 302, 2.3, 35.50),
+(3, 103, 3, 303, 0.8, 20.00),
+(4, 104, 4, 304, 3.6, 48.75),
+(5, 105, 5, 305, 1.2, 22.00),
+(6, 106, 6, 306, 4.1, 55.25),
+(7, 107, 7, 307, 0.5, 15.99),
+(8, 108, 8, 308, 2.5, 40.00),
+(9, 109, 9, 309, 3.2, 45.75),
+(10, 110, 10, 310, 1.8, 30.50);
 
+
+INSERT INTO recipientAddress (recipientID, street, houseNumber, city, country)
+VALUES 
+(1, 'Oxford Street', '123', 'Accra', 'Ghana'),
+(2, 'Labadi Road', '456', 'Tema', 'Ghana'),
+(3, 'Ring Road Central', '789', 'Kumasi', 'Ghana'),
+(4, 'Beach Road', '1011', 'Cape Coast', 'Ghana'),
+(5, 'North Ridge', '1213', 'Tamale', 'Ghana'),
+(6, 'Adenta-Frafraha', '1415', 'Adenta', 'Ghana'),
+(7, 'Spintex Road', '1617', 'Teshie', 'Ghana'),
+(8, 'Kwame Nkrumah Avenue', '1819', 'Sekondi-Takoradi', 'Ghana'),
+(9, 'Kofi Annan Street', '2021', 'Sunyani', 'Ghana'),
+(10, 'Asafo Roundabout', '2223', 'Koforidua', 'Ghana');
 
 INSERT INTO vehicle (id, make, model, year, license_plate, type)
 VALUES
@@ -293,6 +282,32 @@ VALUES
   (8, 'Nissan', 'Altima', 2022, 'VWX234', 'Sedan'),
   (9, 'Audi', 'Q5', 2019, 'YZA567', 'SUV'),
   (10, 'Tesla', 'Model S', 2020, 'BCD890', 'Sedan');
+
+
+INSERT INTO courier (vehicleID, courierId, licenseNumber)
+VALUES 
+(1, 1, 'GHA-1234567'),
+(2, 2, 'GHA-9876543'),
+(3, 3, 'GHA-4561237'),
+(4, 4, 'GHA-7891234'),
+(5, 5, 'GHA-5553332'),
+(6, 6, 'GHA-7779991'),
+(7, 7, 'GHA-1114445'),
+(8, 8, 'GHA-3336668'),
+(9, 9, 'GHA-2228883'),
+(10, 10, 'GHA-4445559');
+
+
+
+
+INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
+VALUES
+  (1, 25.00, '2023-04-01', 1, 3, 5),
+  (2, 20.00, '2023-04-02', 2, 4, 6),
+  (3, 15.50, '2023-04-03', 1, 2, 3),
+  (4, 18.75, '2023-04-04', 3, 1, 4),
+  (5, 10.00, '2023-04-05', 2, 5, 2);
+
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
 CREATE PROCEDURE get_customer_package_info
