@@ -201,12 +201,7 @@ INSERT INTO recipient (recipientID, cust_id) VALUES
   (2, 2),
   (3, 3),
   (4, 4),
-  (5, 5),
-  (6, 6),
-  (7, 7),
-  (8, 8),
-  (9, 9),
-  (10, 10);
+  (5, 5);
   
   
 -- Insert rows into table 'Courier'
@@ -223,42 +218,19 @@ INSERT INTO Courier (CourierId, Rider_fname, Rider_lname, Rider_number) VALUES
    ( 10, N'Emily', N'Wilson', N'+2332648329107');
    
 INSERT INTO Sender (senderID, cust_id) VALUES
-  (1, 1),
-  (2, 2),
-  (3, 3),
-  (4, 4),
-  (5, 5),
-  (6, 6),
-  (7, 7),
-  (8, 8),
-  (9, 9),
-  (10, 10);
+  (1, 6),
+  (2, 7),
+  (3, 8),
+  (4, 9),
+  (5, 10);
   
 INSERT INTO SenderAddress (Street, houseNumber, City, senderID)
 VALUES ('Adabraka Road', 12, 'Accra', 1),
        ('Cape Coast Highway', 23, 'Cape Coast', 2),
        ('Sunyani-Accra Road', 9, 'Sunyani', 3),
        ('Mampong Road', 7, 'Kumasi', 4),
-       ('Nima Street', 18, 'Accra', 5),
-       ('Kumasi-Accra Road', 13, 'Techiman', 6),
-       ('Wa Road', 10, 'Bolgatanga', 7),
-       ('Tema-Akosombo Road', 5, 'Akosombo', 8),
-       ('Tamale Road', 14, 'Navrongo', 9),
-       ('Adenta Street', 21, 'Accra', 10);
-       
-	
+       ('Nima Street', 18, 'Accra', 5);
 
--- INSERT INTO SenderAddress VALUES
-   -- ( N'Outer Ring Road 1', N'OR1', N'Accra'),
-    --  ( N'Ablekuma South', N'AS02', N'Tema'),
-     -- ( N'1st Circular Road', N'645CR', N'Accra Central'),
-    --  ( N'Apple Street', N'67ASJ', N'Community 23'),
-    --  ( N'Abidjan Avenue', N'AA456', N'Accra'),
-    --  ( N'Cocoa Street', N'9078CS', N'Accra'),
-   --   ( N'4th Dade Street', N'67DS4', N'Ga West'),
-    --  ( N'Link Road', N'1LR', N'Accral South'),
-     -- ( N'Abele Street', N'AS89', N'Community 9'),
-   --   ( N'Emmause Lane', N'78EL89', N'Community 25');
    
 INSERT INTO DeliveryInformation (deliveryID, deliveryDate, deliverystatus,courierId)
 VALUES
@@ -293,12 +265,8 @@ VALUES
 (2, 'Labadi Road', '456', 'Tema'),
 (3, 'Ring Road Central', '789', 'Kumasi'),
 (4, 'Beach Road', '1011', 'Cape Coast'),
-(5, 'North Ridge', '1213', 'Tamale'),
-(6, 'Adenta-Frafraha', '1415', 'Adenta'),
-(7, 'Spintex Road', '1617', 'Teshie'),
-(8, 'Kwame Nkrumah Avenue', '1819', 'Sekondi-Takoradi'),
-(9, 'Kofi Annan Street', '2021', 'Sunyani'),
-(10, 'Asafo Roundabout', '2223', 'Koforidua');
+(5, 'North Ridge', '1213', 'Tamale');
+
 
 INSERT INTO vehicle (id, make, model, year, license_plate, type)
 VALUES
@@ -402,29 +370,15 @@ INNER JOIN DeliveryInformation ON Package.deliveryID = DeliveryInformation.deliv
 WHERE Package.pWeight > 0.05
 ORDER BY Package.pWeight DESC;
 
--- Keeps track of customers who request for a delivery service. It allows the courier service keep track of customer details allowing the courier service improve customer service 
--- CREATE INDEX sender_index ON Customer (cust_fname, cust_lname, cust_email,cust_phone);
--- select cust_fname, cust_lname, cust_email,cust_phone from customer 
--- inner join Sender on customer.cust_ID=Sender.cust_ID;
--- select cust_fname,cust_lname,cust_email,cust_phone from customer 
--- inner join Sender on customer.cust_ID=Sender.cust_ID ;
--- -- To count the number of delivery request in a day
--- SELECT COUNT(cust_ID)
--- FROM(customer);
 
--- Keeps track of customers who receive a package 
-CREATE INDEX recipient_index ON Customer (cust_fname, cust_lname, cust_email,cust_phone);
-select cust_fname, cust_lname, cust_email,cust_phone from customer 
-inner join Sender on customer.cust_ID=recipient.cust_ID;
-select cust_fname,cust_lname,cust_email,cust_phone from customer 
-inner join recipient on customer.cust_ID=recipient.cust_ID ;
-SELECT COUNT(cust_ID) from customer right outer join recipient on customer.cust_ID=recipient,cust_ID;
+ SELECT customer.cust_ID,customer.cust_fname, customer.cust_lname, customer.cust_phone, customer.cust_email,
+  SenderAddress.street, SenderAddress.houseNumber, SenderAddress.city
+FROM ((Sender
+INNER JOIN customer ON customer.cust_ID = Sender.cust_ID)
+INNER JOIN SenderAddress ON Sender.senderID = SenderAddress.senderID);
 
-
--- select * from customer right outer join recipient on customer.cust_ID=recipient.cust_ID;
--- select cust_fname,cust_lname,cust_email,cust_phone from (customer right outer JOIN customer ON recipient.cust_ID=customer.cust_ID)
---  inner join recipientAddress ON recipient.recipientID=recipientAddress.recipientID; 
-
-  
-  
-
+  SELECT customer.cust_ID,customer.cust_fname, customer.cust_lname, customer.cust_phone, customer.cust_email,
+  recipientAddress.street, recipientAddress.houseNumber, recipientAddress.city
+FROM ((recipient
+INNER JOIN customer ON customer.cust_ID = recipient.cust_ID)
+INNER JOIN recipientAddress ON recipient.recipientID = recipientAddress.recipientID);
