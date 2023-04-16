@@ -386,26 +386,6 @@ GROUP BY
   d.deliveryID
 ORDER BY 
   d.deliveryDate DESC;
-
-
--- SELECT 
---   c.cust_fname,
---   c.cust_lname,
---   COUNT(p.packageID) as num_packages,
---   SUM(p.price) as total_price,
---   COUNT(DISTINCT d.deliveryID) as num_deliveries,
---   SUM(IF(p.price > 50, p.price * 0.1, 0)) as discount
--- FROM 
---   customer c
---   LEFT JOIN recipient r ON c.cust_id = r.cust_id
---   LEFT JOIN Package p ON r.recipientID = p.recipientAddressID
---   LEFT JOIN DeliveryInformation d ON p.deliveryID = d.deliveryID
--- GROUP BY 
---   c.cust_id
--- HAVING 
---   num_deliveries > 5
--- ORDER BY 
---   total_price DESC;
   
   
 -- sql query which manages the inventory packages such as the package type, the weight and size etc .
