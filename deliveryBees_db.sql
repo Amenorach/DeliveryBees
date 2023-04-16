@@ -25,7 +25,6 @@ CREATE TABLE customer (
   cust_lname VARCHAR(50) NOT NULL,
   cust_email VARCHAR(100) NOT NULL,
   cust_phone VARCHAR(20),
-  address VARCHAR (50),
   cust_pass VARCHAR (40) NOT NULL UNIQUE,
   user_role int(11) NOT NULL
 );
@@ -71,9 +70,9 @@ CREATE TABLE recipient (
 CREATE TABLE DeliveryInformation(
 	deliveryID INT NOT NULL PRIMARY KEY,
 	deliveryDate DATE NOT NULL,
-  deliverystatus enum ("at the warehouse","In transit", "Delivered"),
-  CourierId INT,
-  FOREIGN KEY (CourierId) REFERENCES Courier (CourierId)
+    deliverystatus enum ("at the warehouse","In transit", "Delivered"),
+    CourierId INT,
+    FOREIGN KEY (CourierId) REFERENCES Courier (CourierId)
 );
 
 CREATE TABLE recipientAddress(
@@ -182,18 +181,18 @@ ADD CONSTRAINT UQ_courier_licenseNumber UNIQUE (licenseNumber);
 --
 -- DATABASE POPULATION--
 
-INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address,cust_pass, user_role)
+INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone,cust_pass, user_role)
 VALUES
-  (1, 'Kwame', 'Appiah', 'kwame.appiah@gmail.com', '0241234567', '123 Main St, Accra', '1l0v3k3nk3y', 1),
-  (2, 'Adjoa', 'Boateng', 'adjoa.boateng@gmail.com', '0272345678', '456 Oak St, Kumasi', 'hdsf848rgh', 1),
-  (3, 'Yaw', 'Kwakye', 'yaw.kwakye@gmail.com', '0203456789', '789 Elm St, Cape Coast','idhoayd2094',2),
-  (4, 'Akua', 'Owusu', 'akua.owusu@gmail.com', '0244567890', '234 Pine St, Tamale','7845bf834YGIG',1),
-  (5, 'Kofi', 'Addo', 'kofi.addo@gmail.com', '0545678901', '567 Maple St, Takoradi','893GEU89Y9',2),
-  (6, 'Esi', 'Adu', 'esi.adu@gmail.com', '0246789012', '890 Cherry St, Accra','SIHF6gyig#',2),
-  (7, 'Yaw', 'Asante', 'yaw.asante@gmail.com', '0277890123', '1234 Elmwood Ave, Kumasi','he79y%^',2),
-  (8, 'Ama', 'Mensah', 'ama.mensah@gmail.com', '0209012345', '5678 Oakwood Blvd, Cape Coast','huGHU876',1),
-  (9, 'Kwesi', 'Addae', 'kwesi.addae@gmail.com', '0540123456', '9012 Pine St, Tamale','HIUSAI^*%^',2),
-  (10, 'Abena', 'Osei', 'abena.osei@gmail.com', '0243456789', '3456 Maple Ave, Takoradi','#(#0iudgcsui(660',1);
+  (1, 'Kwame', 'Appiah', 'kwame.appiah@gmail.com', '0241234567', '1l0v3k3nk3y', 1),
+  (2, 'Adjoa', 'Boateng', 'adjoa.boateng@gmail.com', '0272345678', 'hdsf848rgh', 1),
+  (3, 'Yaw', 'Kwakye', 'yaw.kwakye@gmail.com', '0203456789','idhoayd2094',2),
+  (4, 'Akua', 'Owusu', 'akua.owusu@gmail.com', '0244567890','7845bf834YGIG',1),
+  (5, 'Kofi', 'Addo', 'kofi.addo@gmail.com', '0545678901','893GEU89Y9',2),
+  (6, 'Esi', 'Adu', 'esi.adu@gmail.com', '0246789012','SIHF6gyig#',2),
+  (7, 'Yaw', 'Asante', 'yaw.asante@gmail.com', '0277890123','he79y%^',2),
+  (8, 'Ama', 'Mensah', 'ama.mensah@gmail.com', '0209012345','huGHU876',1),
+  (9, 'Kwesi', 'Addae', 'kwesi.addae@gmail.com', '0540123456','HIUSAI^*%^',2),
+  (10, 'Abena', 'Osei', 'abena.osei@gmail.com', '0243456789','#(#0iudgcsui(660',1);
 
 INSERT INTO recipient (recipientID, cust_id) VALUES
   (1, 1),
@@ -350,16 +349,6 @@ VALUES
   
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
--- This query retrieves information about customers who have received at least 5 deliveries, 
--- and calculates the total number of packages they have received, the total price they have paid, 
--- and the number of deliveries they have received. It also applies a discount of 10% to the total 
--- price if the price of the package is over $50.
-
--- The query uses an outer join to include customers who have not received any packages, 
--- and a subquery to calculate the discount. It also uses aggregation functions like COUNT 
--- and SUM to calculate the number of packages and the total price. Finally, it sorts the 
--- results by total price in descending order.
-
 SELECT 
   c.cust_fname,
   c.cust_lname,
@@ -380,17 +369,3 @@ ORDER BY
   total_price DESC;
   
   
--- sql query which manages the inventory packages such as the package type, the weight and size etc .
-  -- This query selects the package ID, weight, price, and customer ID from the Package table, as well as the make, model, 
-  -- and type of vehicle being used to transport the package, and the delivery status from the DeliveryInformation table. 
-  -- It uses an inner join to combine information from the Package, couriervehiclerider, vehicle, and DeliveryInformation tables. 
-  -- The WHERE clause filters the results to only include packages with a weight greater than 10. The results are sorted by 
-  -- package weight in descending order.
-SELECT Package.packageID, Package.pWeight, Package.price, Package.cust_id, vehicle.make, vehicle.model, vehicle.type, DeliveryInformation.deliverystatus
-FROM Package
-INNER JOIN couriervehiclerider ON Package.courierID = couriervehiclerider.courierID
-INNER JOIN vehicle ON couriervehiclerider.vehicleID = vehicle.id
-INNER JOIN DeliveryInformation ON Package.deliveryID = DeliveryInformation.deliveryID
-WHERE Package.pWeight > 10
-ORDER BY Package.pWeight DESC;
-
