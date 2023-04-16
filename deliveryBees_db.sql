@@ -394,7 +394,7 @@ ORDER BY
   -- It uses an inner join to combine information from the Package, couriervehiclerider, vehicle, and DeliveryInformation tables. 
   -- The WHERE clause filters the results to only include packages with a weight greater than 10. The results are sorted by 
   -- package weight in descending order.
-SELECT Package.packageID, Package.pWeight, Package.price, Package.cust_id, vehicle.make, vehicle.model, vehicle.type, DeliveryInformation.deliverystatus
+SELECT Package.packageID, Package.pWeight, Package.price, vehicle.make, vehicle.model, vehicle.type, DeliveryInformation.deliverystatus
 FROM Package
 INNER JOIN couriervehiclerider ON Package.courierId = couriervehiclerider.courierId
 INNER JOIN vehicle ON couriervehiclerider.vehicleID = vehicle.id
