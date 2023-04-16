@@ -20,11 +20,12 @@ CREATE TABLE Courier (
 -- Create the table in the specified schema--
 
 CREATE TABLE customer (
-  cust_id INT PRIMARY KEY,
+  cust_id INT NOT NULL PRIMARY KEY,
   cust_fname VARCHAR(50) NOT NULL,
   cust_lname VARCHAR(50) NOT NULL,
   cust_email VARCHAR(100) NOT NULL,
   cust_phone VARCHAR(20),
+  address VARCHAR (50),
   cust_pass VARCHAR (40) NOT NULL UNIQUE,
   user_role int(11) NOT NULL
 );
@@ -98,7 +99,8 @@ CREATE TABLE Package(
 	recipientAddressID INT NOT NULL,
 	pWeight DECIMAL(10,2) NOT NULL,
 	price DECIMAL(10,2) NOT NULL,
-    cust_id INT
+    cust_id INT NOT NULL,
+    paymentStatus VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE payment (
@@ -181,18 +183,18 @@ ADD CONSTRAINT UQ_courier_licenseNumber UNIQUE (licenseNumber);
 --
 -- DATABASE POPULATION--
 
-INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone,cust_pass, user_role)
+INSERT INTO customer (cust_id, cust_fname, cust_lname, cust_email, cust_phone, address,cust_pass, user_role)
 VALUES
-  (1, 'Kwame', 'Appiah', 'kwame.appiah@gmail.com', '0241234567', '1l0v3k3nk3y', 1),
-  (2, 'Adjoa', 'Boateng', 'adjoa.boateng@gmail.com', '0272345678', 'hdsf848rgh', 1),
-  (3, 'Yaw', 'Kwakye', 'yaw.kwakye@gmail.com', '0203456789','idhoayd2094',2),
-  (4, 'Akua', 'Owusu', 'akua.owusu@gmail.com', '0244567890','7845bf834YGIG',1),
-  (5, 'Kofi', 'Addo', 'kofi.addo@gmail.com', '0545678901','893GEU89Y9',2),
-  (6, 'Esi', 'Adu', 'esi.adu@gmail.com', '0246789012','SIHF6gyig#',2),
-  (7, 'Yaw', 'Asante', 'yaw.asante@gmail.com', '0277890123','he79y%^',2),
-  (8, 'Ama', 'Mensah', 'ama.mensah@gmail.com', '0209012345','huGHU876',1),
-  (9, 'Kwesi', 'Addae', 'kwesi.addae@gmail.com', '0540123456','HIUSAI^*%^',2),
-  (10, 'Abena', 'Osei', 'abena.osei@gmail.com', '0243456789','#(#0iudgcsui(660',1);
+  (1, 'Kwame', 'Appiah', 'kwame.appiah@gmail.com', '0241234567', '123 Main St, Accra', '1l0v3k3nk3y', 1),
+  (2, 'Adjoa', 'Boateng', 'adjoa.boateng@gmail.com', '0272345678', '456 Oak St, Kumasi', 'hdsf848rgh', 1),
+  (3, 'Yaw', 'Kwakye', 'yaw.kwakye@gmail.com', '0203456789', '789 Elm St, Cape Coast','idhoayd2094',2),
+  (4, 'Akua', 'Owusu', 'akua.owusu@gmail.com', '0244567890', '234 Pine St, Tamale','7845bf834YGIG',1),
+  (5, 'Kofi', 'Addo', 'kofi.addo@gmail.com', '0545678901', '567 Maple St, Takoradi','893GEU89Y9',2),
+  (6, 'Esi', 'Adu', 'esi.adu@gmail.com', '0246789012', '890 Cherry St, Accra','SIHF6gyig#',2),
+  (7, 'Yaw', 'Asante', 'yaw.asante@gmail.com', '0277890123', '1234 Elmwood Ave, Kumasi','he79y%^',2),
+  (8, 'Ama', 'Mensah', 'ama.mensah@gmail.com', '0209012345', '5678 Oakwood Blvd, Cape Coast','huGHU876',1),
+  (9, 'Kwesi', 'Addae', 'kwesi.addae@gmail.com', '0540123456', '9012 Pine St, Tamale','HIUSAI^*%^',2),
+  (10, 'Abena', 'Osei', 'abena.osei@gmail.com', '0243456789', '3456 Maple Ave, Takoradi','#(#0iudgcsui(660',1);
 
 INSERT INTO recipient (recipientID, cust_id) VALUES
   (1, 1),
@@ -271,18 +273,18 @@ VALUES
 (109, '2023-04-24','at the warehouse',9),
 (110, '2023-04-25','in transit', 10);
 
-INSERT INTO Package (packageID, deliveryID, courierId, recipientAddressID, pWeight, price)
+INSERT INTO Package (packageID, deliveryID, courierId, recipientAddressID, pWeight, price, paymentStatus)
 VALUES
-(1, 101, 1, 301, 1.5, 25.99),
-(2, 102, 2, 302, 2.3, 35.50),
-(3, 103, 3, 303, 0.8, 20.00),
-(4, 104, 4, 304, 3.6, 48.75),
-(5, 105, 5, 305, 1.2, 22.00),
-(6, 106, 6, 306, 4.1, 55.25),
-(7, 107, 7, 307, 0.5, 15.99),
-(8, 108, 8, 308, 2.5, 40.00),
-(9, 109, 9, 309, 3.2, 45.75),
-(10, 110, 10, 310, 1.8, 30.50);
+(1, 101, 1, 301, 1.5, 25.99, 'Unpaid'),
+(2, 102, 2, 302, 2.3, 35.50, 'Unpaid'),
+(3, 103, 3, 303, 0.8, 20.00, 'Paid'),
+(4, 104, 4, 304, 3.6, 48.75, 'Unpaid'),
+(5, 105, 5, 305, 1.2, 22.00, 'Paid'),
+(6, 106, 6, 306, 4.1, 55.25, 'Paid'),
+(7, 107, 7, 307, 0.5, 15.99, 'Paid'),
+(8, 108, 8, 308, 2.5, 40.00, 'Paid'),
+(9, 109, 9, 309, 3.2, 45.75, 'Paid'),
+(10, 110, 10, 310, 1.8, 30.50,'Paid');
 
 
 INSERT INTO recipientAddress (recipientID, street, houseNumber, city)
@@ -350,38 +352,56 @@ VALUES
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
 SELECT 
-  c.cust_fname,
-  c.cust_lname,
+  d.deliveryID,
+  d.deliveryDate,
   COUNT(p.packageID) as num_packages,
   SUM(p.price) as total_price,
-  COUNT(DISTINCT d.deliveryID) as num_deliveries,
-  SUM(IF(p.price > 50, p.price * 0.1, 0)) as discount
+  SUM(CASE WHEN p.paymentStatus = 'Paid' THEN p.price ELSE 0 END) as total_paid,
+  SUM(CASE WHEN p.paymentStatus = 'Unpaid' THEN p.price ELSE 0 END) as total_unpaid
 FROM 
-  customer c
-  LEFT JOIN recipient r ON c.cust_id = r.cust_id
-  LEFT JOIN Package p ON r.recipientID = p.recipientAddressID
-  LEFT JOIN DeliveryInformation d ON p.deliveryID = d.deliveryID
+  DeliveryInformation d 
+  LEFT JOIN Package p ON d.deliveryID = p.deliveryID
 GROUP BY 
-  c.cust_id
-HAVING 
-  num_deliveries > 5
+  d.deliveryID
 ORDER BY 
-  total_price DESC;
+  d.deliveryDate DESC;
 
 
+-- SELECT 
+--   c.cust_fname,
+--   c.cust_lname,
+--   COUNT(p.packageID) as num_packages,
+--   SUM(p.price) as total_price,
+--   COUNT(DISTINCT d.deliveryID) as num_deliveries,
+--   SUM(IF(p.price > 50, p.price * 0.1, 0)) as discount
+-- FROM 
+--   customer c
+--   LEFT JOIN recipient r ON c.cust_id = r.cust_id
+--   LEFT JOIN Package p ON r.recipientID = p.recipientAddressID
+--   LEFT JOIN DeliveryInformation d ON p.deliveryID = d.deliveryID
+-- GROUP BY 
+--   c.cust_id
+-- HAVING 
+--   num_deliveries > 5
+-- ORDER BY 
+--   total_price DESC;
+  
+  
 -- sql query which manages the inventory packages such as the package type, the weight and size etc .
   -- This query selects the package ID, weight, price, and customer ID from the Package table, as well as the make, model, 
   -- and type of vehicle being used to transport the package, and the delivery status from the DeliveryInformation table. 
   -- It uses an inner join to combine information from the Package, couriervehiclerider, vehicle, and DeliveryInformation tables. 
-  -- The WHERE clause filters the results to only include packages with a weight greater than 0.05 kg. The results are sorted by 
+  -- The WHERE clause filters the results to only include packages with a weight greater than 10. The results are sorted by 
   -- package weight in descending order.
 SELECT Package.packageID, Package.pWeight, Package.price, Package.cust_id, vehicle.make, vehicle.model, vehicle.type, DeliveryInformation.deliverystatus
 FROM Package
-INNER JOIN couriervehiclerider ON Package.courierID = couriervehiclerider.courierID
+INNER JOIN couriervehiclerider ON Package.courierId = couriervehiclerider.courierId
 INNER JOIN vehicle ON couriervehiclerider.vehicleID = vehicle.id
 INNER JOIN DeliveryInformation ON Package.deliveryID = DeliveryInformation.deliveryID
 WHERE Package.pWeight > 0.05
 ORDER BY Package.pWeight DESC;
+
+
   
   
 -- query for identifying vehicle lincense number for riders in Ga West (GW)
