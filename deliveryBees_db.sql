@@ -369,3 +369,8 @@ ORDER BY
   total_price DESC;
   
   
+-- query for identifying vehicle lincense number for riders in Ga West (GW)
+SELECT vehicle.id, courier.licenseNumber
+FROM courier
+INNER JOIN vehicle ON vehicle.id = courier.vehicleID
+WHERE courier.licenseNumber LIKE 'GW%';
