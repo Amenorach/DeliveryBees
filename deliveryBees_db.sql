@@ -384,10 +384,3 @@ INNER JOIN DeliveryInformation ON Package.deliveryID = DeliveryInformation.deliv
 WHERE Package.pWeight > 10
 ORDER BY Package.pWeight DESC;
 
--- SELECT p.package_id, p.package_type, p.weight, p.width, p.length, p.height, 
- -- COUNT(*) as total_items
--- FROM Package p
--- INNER JOIN inventory i ON p.package_id = i.package_id
--- WHERE p.weight > 10
--- GROUP BY p.package_id, p.package_type, p.weight, p.width, p.length, p.height
--- ORDER BY p.package_type ASC;
