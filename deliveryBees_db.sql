@@ -370,5 +370,24 @@ ORDER BY
   total_price DESC;
   
   
+-- sql query which manages the inventory packages such as the package type, the weight and size etc .
+  -- This query selects the package ID, weight, price, and customer ID from the Package table, as well as the make, model, 
+  -- and type of vehicle being used to transport the package, and the delivery status from the DeliveryInformation table. 
+  -- It uses an inner join to combine information from the Package, couriervehiclerider, vehicle, and DeliveryInformation tables. 
+  -- The WHERE clause filters the results to only include packages with a weight greater than 10. The results are sorted by 
+  -- package weight in descending order.
+SELECT Package.packageID, Package.pWeight, Package.price, Package.cust_id, vehicle.make, vehicle.model, vehicle.type, DeliveryInformation.deliverystatus
+FROM Package
+INNER JOIN couriervehiclerider ON Package.courierID = couriervehiclerider.courierID
+INNER JOIN vehicle ON couriervehiclerider.vehicleID = vehicle.id
+INNER JOIN DeliveryInformation ON Package.deliveryID = DeliveryInformation.deliveryID
+WHERE Package.pWeight > 10
+ORDER BY Package.pWeight DESC;
 
-  
+-- SELECT p.package_id, p.package_type, p.weight, p.width, p.length, p.height, 
+ -- COUNT(*) as total_items
+-- FROM Package p
+-- INNER JOIN inventory i ON p.package_id = i.package_id
+-- WHERE p.weight > 10
+-- GROUP BY p.package_id, p.package_type, p.weight, p.width, p.length, p.height
+-- ORDER BY p.package_type ASC;
