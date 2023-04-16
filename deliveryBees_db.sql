@@ -25,7 +25,7 @@ CREATE TABLE customer (
   cust_lname VARCHAR(50) NOT NULL,
   cust_email VARCHAR(100) NOT NULL,
   cust_phone VARCHAR(20),
-  address VARCHAR (20)
+  address VARCHAR (50)
 );
 
 DROP TABLE IF EXISTS dboSender;
@@ -298,8 +298,6 @@ VALUES
 (10, 10, 'GHA-4445559');
 
 
-
-
 INSERT INTO payment (id, amount, payment_date, courier_id, recipient_id, package_id)
 VALUES
   (1, 25.00, '2023-04-01', 1, 3, 5),
@@ -307,7 +305,6 @@ VALUES
   (3, 15.50, '2023-04-03', 1, 2, 3),
   (4, 18.75, '2023-04-04', 3, 1, 4),
   (5, 10.00, '2023-04-05', 2, 5, 2);
-
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
 CREATE PROCEDURE get_customer_package_info
