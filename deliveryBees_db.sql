@@ -307,22 +307,41 @@ VALUES
   (5, 10.00, '2023-04-05', 2, 5, 2);
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
-CREATE PROCEDURE get_customer_package_info
-    @start_date DATE
-AS
-BEGIN
-    DECLARE @start_date DATE; -- Add this line to declare the variable
+SELECT 
+  c.cust_fname,
+  c.cust_lname,
+  COUNT(p.packageID) as num_packages,
+  SUM(p.price) as total_price,
+  COUNT(DISTINCT d.deliveryID) as num_deliveries,
+  SUM(IF(p.price > 50, p.price * 0.1, 0)) as discount
+FROM 
+  customer c
+  LEFT JOIN recipient r ON c.cust_id = r.customerID
+  LEFT JOIN Package p ON r.recipientID = p.recipientAddressID
+  LEFT JOIN DeliveryInformation d ON p.deliveryID = d.deliveryID
+GROUP BY 
+  c.cust_id
+HAVING 
+  num_deliveries > 5
+ORDER BY 
+  total_price DESC;
+  
+-- CREATE PROCEDURE get_customer_package_info
+--     @start_date DATE
+-- AS
+-- BEGIN
+--     DECLARE @start_date DATE; -- Add this line to declare the variable
 
-    SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
-    FROM customer c
-    INNER JOIN recipient r ON c.cust_id = r.id
-    LEFT OUTER JOIN payment pa ON r.id = pa.recipient_id
-    LEFT OUTER JOIN package p ON pa.package_id = p.packageID
-    WHERE pa.payment_date > @start_date
-    GROUP BY c.cust_fname, c.cust_lname
-    HAVING COUNT(p.id) > 0
-    ORDER BY total_price DESC;
-END
+--     SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
+--     FROM customer c
+--     INNER JOIN recipient r ON c.cust_id = r.id
+--     LEFT OUTER JOIN payment pa ON r.id = pa.recipient_id
+--     LEFT OUTER JOIN package p ON pa.package_id = p.packageID
+--     WHERE pa.payment_date > @start_date
+--     GROUP BY c.cust_fname, c.cust_lname
+--     HAVING COUNT(p.id) > 0
+--     ORDER BY total_price DESC;
+-- END
 
 
 -- SELECT c.cust_fname, c.cust_lname, COUNT(p.id) AS num_packages, SUM(p.price) AS total_price
