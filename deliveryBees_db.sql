@@ -350,6 +350,16 @@ VALUES
   
 
 -- Query that keeps track of invoices and billings based on the delivery services rendered
+-- This query retrieves information about customers who have received at least 5 deliveries, 
+-- and calculates the total number of packages they have received, the total price they have paid, 
+-- and the number of deliveries they have received. It also applies a discount of 10% to the total 
+-- price if the price of the package is over $50.
+
+-- The query uses an outer join to include customers who have not received any packages, 
+-- and a subquery to calculate the discount. It also uses aggregation functions like COUNT 
+-- and SUM to calculate the number of packages and the total price. Finally, it sorts the 
+-- results by total price in descending order.
+
 SELECT 
   c.cust_fname,
   c.cust_lname,
