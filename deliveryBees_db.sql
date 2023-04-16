@@ -368,6 +368,7 @@ HAVING
 ORDER BY 
   total_price DESC;
 
+
 -- sql query which manages the inventory packages such as the package type, the weight and size etc .
   -- This query selects the package ID, weight, price, and customer ID from the Package table, as well as the make, model, 
   -- and type of vehicle being used to transport the package, and the delivery status from the DeliveryInformation table. 
