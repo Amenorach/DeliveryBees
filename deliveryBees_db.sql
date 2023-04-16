@@ -402,6 +402,28 @@ INNER JOIN DeliveryInformation ON Package.deliveryID = DeliveryInformation.deliv
 WHERE Package.pWeight > 0.05
 ORDER BY Package.pWeight DESC;
 
+-- Keeps track of customers who request for a delivery service. It allows the courier service keep track of customer details allowing the courier service improve customer service 
+-- CREATE INDEX sender_index ON Customer (cust_fname, cust_lname, cust_email,cust_phone);
+-- select cust_fname, cust_lname, cust_email,cust_phone from customer 
+-- inner join Sender on customer.cust_ID=Sender.cust_ID;
+-- select cust_fname,cust_lname,cust_email,cust_phone from customer 
+-- inner join Sender on customer.cust_ID=Sender.cust_ID ;
+-- -- To count the number of delivery request in a day
+-- SELECT COUNT(cust_ID)
+-- FROM(customer);
+
+-- Keeps track of customers who receive a package 
+CREATE INDEX recipient_index ON Customer (cust_fname, cust_lname, cust_email,cust_phone);
+select cust_fname, cust_lname, cust_email,cust_phone from customer 
+inner join Sender on customer.cust_ID=recipient.cust_ID;
+select cust_fname,cust_lname,cust_email,cust_phone from customer 
+inner join recipient on customer.cust_ID=recipient.cust_ID ;
+SELECT COUNT(cust_ID) from customer right outer join recipient on customer.cust_ID=recipient,cust_ID;
+
+
+-- select * from customer right outer join recipient on customer.cust_ID=recipient.cust_ID;
+-- select cust_fname,cust_lname,cust_email,cust_phone from (customer right outer JOIN customer ON recipient.cust_ID=customer.cust_ID)
+--  inner join recipientAddress ON recipient.recipientID=recipientAddress.recipientID; 
 
   
   
