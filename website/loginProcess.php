@@ -1,5 +1,5 @@
 <?php
-include("../controllers/contact_controller.php");
+include("../controller/all_controller.php");
 
 if(isset($_POST['loginButton'])){
     $email=$_POST['cust_email'];

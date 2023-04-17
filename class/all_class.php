@@ -1,37 +1,13 @@
 <?php
-include_once(dirname(__FILE__)) . "../../settings/dbClass.php";
+include_once(dirname(__FILE__)) . "../settings/dbClass.php";
 
 class ContactClass extends db_connection
 {
-    function add_Cust_record_cls($fname, $lname, $number, $country, $email, $password, $user_role)
-    {
-        // return true or false
-        return $this->db_query(
-            "INSERT INTO customer (`customer_fname`, `customer_lname`, `customer_contact`, `customer_country`, `customer_email`, `customer_pass`, `user_role`) VALUES ('$fname', '$lname', '$number', '$country', '$email', '$password', '$user_role')"
-        );
-    }
-
-    function add_Admin_record_cls($fname, $lname, $number, $country, $email, $password, $user_role)
-    {
-        // return true or false
-        return $this->db_query(
-            "INSERT INTO customer (`customer_fname`, `customer_lname`, `customer_contact`, `customer_country`, `customer_email`, `customer_pass`, `user_role`) VALUES ('$fname', '$lname', '$number', '$country', '$email', '$password', '$user_role')"
-        );
-    }
-
-    function add_newsletrecord_cls($mailname)
-    {
-        // return true or false
-        return $this->db_query(
-            "INSERT INTO newsletter (`news_email`) VALUES ('$mailname')"
-        );
-    }
-    
     
     function getUserDetailsByEmail_cls($email)
     {
         //write the sql
-        $sql = "SELECT * FROM `customer` WHERE `customer_email` = '$email'";
+        $sql = "SELECT * FROM `customer` WHERE `cust_email` = '$email'";
         //execute the sql
         return $this->fetchOne($sql);
     }
@@ -39,7 +15,7 @@ class ContactClass extends db_connection
     function getAdminDetailsByEmail_cls($email)
     {
         //write the sql
-        $sql = "SELECT * FROM `customer` WHERE `customer_email` = '$email' AND `user_role` = 2";
+        $sql = "SELECT * FROM `customer` WHERE `cust_email` = '$email' AND `user_role` = 2";
         //execute the sql
         return $this->fetchOne($sql);
     }
@@ -47,7 +23,7 @@ class ContactClass extends db_connection
     //login
 	function sel_regis_cls ($b,$c){
 		$c_p = md5($c);
-		$sql = "SELECT * FROM `customer` WHERE `customer_email` = '$b' AND `customer_pass` = '$c_p'";
+		$sql = "SELECT * FROM `customer` WHERE `cust_email` = '$b' AND `cust_pass` = '$c_p'";
 		return $this->db_fetch_one($sql);
 	}
 
@@ -87,23 +63,16 @@ class ContactClass extends db_connection
     {
         // return true or false
         return $this->db_query(
-            "SELECT * from customer where customer_id ='$cid'"
+            "SELECT * from customer where cust_id ='$cid'"
         );
     }
 
-    function update_record_cls($id, $name, $number, $country)
-    {
-        // return true or false
-        return $this->db_query(
-            "UPDATE `customer` SET `customer_name`='$name',`customer_contact`='$number',`customer_country`='$country' WHERE `customer_id`='$id'"
-        );
-    }
 
     function delete_record_cls($id)
     {
         // return true or false
         return $this->db_query(
-            "DELETE FROM `customer` WHERE `customer_id`='$id'"
+            "DELETE FROM `customer` WHERE `cust_id`='$id'"
         );
     }
 

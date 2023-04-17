@@ -3,30 +3,6 @@
 include_once(dirname(__FILE__)) . '/../class/all_class.php';
 
 
-function add_record_ctr($fname, $lname, $number, $country, $email, $password, $user_role)
-{
-    // create an instance of the Product class
-    $class_instance = new ContactClass();
-    // call the method from the class
-    return $class_instance->add_Cust_record_cls($fname, $lname, $number, $country, $email, $password, $user_role);
-}
-
-function add_Admin_record_ctr($fname, $lname, $number, $country, $email, $password, $user_role)
-{
-    // create an instance of the Product class
-    $class_instance = new ContactClass();
-    // call the method from the class
-    return $class_instance->add_Admin_record_cls($fname, $lname, $number, $country, $email, $password, $user_role);
-}
-
-function add_newsletrecord_ctr($mailname)
-{
-    // create an instance of the Product class
-    $class_instance = new ContactClass();
-    // call the method from the class
-    return $class_instance->add_newsletrecord_cls($mailname);
-}
-
 
 // function addcustomer_ctr($name, $email, $pass, $country, $city, $contact, $role){
 // //run instance
@@ -184,14 +160,6 @@ function get_one_record_ctr($cid)
         //no data found
         return false;
     }
-}
-
-function update_record_ctr($id, $name, $number, $country)
-{
-    // create an instance of the Product class
-    $class_instance = new ContactClass();
-    // call the method from the class
-    return $class_instance->update_record_cls($id, $name, $number, $country);
 }
 
 function delete_record_ctr($id)
