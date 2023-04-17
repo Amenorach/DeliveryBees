@@ -53,8 +53,8 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="../website/homepage.php" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="../website/about.php" class="nav-link px-2 text-dark">Tables</a></li>
+                    <!-- <li><a href="../website/homepage.php" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="../website/about.php" class="nav-link px-2 text-dark">Tables</a></li> -->
                 </ul>
 
                 <div class="text-end">
