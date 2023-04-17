@@ -1,9 +1,95 @@
 <?php
-include_once(dirname(__FILE__)) . "../settings/dbClass.php";
+include_once("../settings/db_class.php");
 
 class ContactClass extends db_connection
 {
+    public function identifyVehicle_cls()
+    {
+        //write the sql
+        $sql = "SELECT vehicle.id, couriervehiclerider.licenseNumber
+        FROM `couriervehiclerider`
+        INNER JOIN `vehicle` ON vehicle.id = couriervehiclerider.vehicleID
+        WHERE couriervehiclerider.licenseNumber LIKE 'GW%'";
+        //execute the sql
+        return $this->fetch($sql);
+    }
+
+    public function deliveryInfo_cls()
+    {
+        //write the sql
+        $sql = "SELECT DeliveryInformation.deliveryID, DeliveryInformation.deliveryDate, Courier.Rider_fname, Courier.Rider_lname , Package.price
+        FROM 
+          `DeliveryInformation` 
+          INNER JOIN `Courier` ON DeliveryInformation.courierID = Courier.courierID 
+          LEFT OUTER JOIN `Package` ON DeliveryInformation.deliveryID = Package.deliveryID
+        WHERE 
+          DeliveryInformation.deliveryDate < '2023-04-16'
+        ORDER BY 
+          DeliveryInformation.deliveryDate DESC";
+        //execute the sql
+        return $this->fetch($sql);
+    }
+
+    public function invoice_cls()
+    {
+        //write the sql
+        $sql = "SELECT 
+        d.deliveryID,
+        d.deliveryDate,
+        COUNT(p.packageID) as num_packages,
+        SUM(p.price) as total_price,
+        SUM(CASE WHEN p.paymentStatus = 'Paid' THEN p.price ELSE 0 END) as total_paid,
+        SUM(CASE WHEN p.paymentStatus = 'Unpaid' THEN p.price ELSE 0 END) as total_unpaid
+      FROM 
+        `DeliveryInformation` d 
+        LEFT JOIN `Package` p ON d.deliveryID = p.deliveryID
+      GROUP BY 
+        d.deliveryID
+      ORDER BY 
+        d.deliveryDate DESC;";
+        //execute the sql
+        return $this->fetch($sql);
+    }
+
+    public function inventory_cls()
+    {
+        //write the sql
+        $sql = "SELECT Package.packageID, Package.pWeight, Package.price, vehicle.make, vehicle.model, vehicle.type, DeliveryInformation.deliverystatus
+        FROM `Package`
+        INNER JOIN `couriervehiclerider` ON Package.courierId = couriervehiclerider.courierId
+        INNER JOIN `vehicle` ON couriervehiclerider.vehicleID = vehicle.id
+        INNER JOIN `DeliveryInformation` ON Package.deliveryID = DeliveryInformation.deliveryID
+        WHERE Package.pWeight > 0.05
+        ORDER BY Package.pWeight DESC";
+        //execute the sql
+        return $this->fetch($sql);
+    }
+
+    public function sender_cls()
+    {
+        //write the sql
+        $sql = "SELECT customer.cust_ID,customer.cust_fname, customer.cust_lname, customer.cust_phone, customer.cust_email,
+        SenderAddress.street, SenderAddress.houseNumber, SenderAddress.city
+        FROM ((Sender
+        INNER JOIN `customer` ON customer.cust_ID = Sender.cust_ID)
+        INNER JOIN `SenderAddress` ON Sender.senderID = SenderAddress.senderID)";
+        //execute the sql
+        return $this->fetch($sql);
+    }
+
+    public function recipients_cls()
+    {
+        //write the sql
+        $sql = "SELECT customer.cust_ID,customer.cust_fname, customer.cust_lname, customer.cust_phone, customer.cust_email,
+        recipientAddress.street, recipientAddress.houseNumber, recipientAddress.city
+      FROM ((`recipient`
+      INNER JOIN `customer` ON customer.cust_ID = recipient.cust_ID)
+      INNER JOIN `recipientAddress` ON recipient.recipientID = recipientAddress.recipientID);";
+        //execute the sql
+        return $this->fetch($sql);
+    }
     
+
     function getUserDetailsByEmail_cls($email)
     {
         //write the sql
@@ -19,13 +105,14 @@ class ContactClass extends db_connection
         //execute the sql
         return $this->fetchOne($sql);
     }
-    
+
     //login
-	function sel_regis_cls ($b,$c){
-		$c_p = md5($c);
-		$sql = "SELECT * FROM `customer` WHERE `cust_email` = '$b' AND `cust_pass` = '$c_p'";
-		return $this->db_fetch_one($sql);
-	}
+    function sel_regis_cls($b, $c)
+    {
+        $c_p = md5($c);
+        $sql = "SELECT * FROM `customer` WHERE `cust_email` = '$b' AND `cust_pass` = '$c_p'";
+        return $this->db_fetch_one($sql);
+    }
 
     function get_all_records_cls()
     {
@@ -42,7 +129,7 @@ class ContactClass extends db_connection
             "SELECT * from newsletter"
         );
     }
-    
+
 
     // function get_all_newsrecords_cls()
     // {
@@ -83,5 +170,4 @@ class ContactClass extends db_connection
             "DELETE FROM `newsletter` WHERE `news_id`='$id'"
         );
     }
-
 }

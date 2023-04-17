@@ -70,7 +70,7 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" aria-current="page" href="./tables.php">
+                            <a class="nav-link " aria-current="page" href="./tables.php">
                                 <span data-feather="home"></span>
                                 Vehicle Identification
                             </a>
@@ -82,7 +82,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./invoice.php">
+                            <a class="nav-link text-dark" href="./invoice.php">
                                 <span data-feather="file"></span>
                                 Invoice
                             </a>
@@ -111,7 +111,7 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Vehicle Identification</h1>
+                    <h1 class="h2">Invoice</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
                             <span data-feather="calendar"></span>
@@ -125,30 +125,32 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mt-5 mb-3 clearfix">
-                                    <h3 class="pull-left">Identifying Vehicle License Number for riders in Ga West (GW)</h3>
+                                    <h3 class="pull-left">To Keep track of invoices and billings based on the delivery services rendered</h3>
                                 </div>
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>License Number</th>
-                                            <!-- <th>Product Brand</th>
-                                            <th>Product Name</th>
-                                            <th>Product Price</th>
-                                            <th>Product Description</th>
-                                            <th>Product Keywords</th>
-                                            <th>Actions</th> -->
+                                            <th>Delivery Date</th>
+                                            <th>Number of Packages</th>
+                                            <th>Total Amount(s)</th>
+                                            <th>Total Amount(s) Paid</th>
+                                            <th>Total Amount(s) Unpaid</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         require "../controller/all_controller.php";
-                                        $result = identifyVehicle();
+                                        $result = invoice();
 
                                         foreach ($result as $product) {
                                             echo "<tr>
-                                                    <td>" . $product['id'] . "</td>
-                                                    <td>" . $product['licenseNumber'] . "</td>";
+                                                    <td>" . $product['deliveryID'] . "</td>
+                                                    <td>" . $product['deliveryDate'] . "</td>
+                                                    <td>" . $product['num_packages'] . "</td>
+                                                    <td>" . $product['total_price'] . "</td>
+                                                    <td>" . $product['total_paid'] . "</td>
+                                                    <td>" . $product['total_unpaid'] . "</td>";
                                                 "</tr>";
                                         }
                                         ?>

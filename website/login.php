@@ -74,26 +74,21 @@
   <script src="../js/regis.js"></script>
 
   <main class="form-signin w-100 m-auto text-muted">
-    <form name="register" id="register" action="loginProcess.php" method="POST" onSubmit="return formValidation()">
-      <img class="mb-4" src="" alt="" width="150" height="57">
+    <form name="register" id="register" action="./loginProcess.php" method="POST" onSubmit="return formValidation()">
+      <img class="mb-4" src="../images/DBlogo.png" alt="" width="150" height="100">
       <h1 class="h3 mb-3 fw-normal">Please Sign In</h1>
 
       <div class="form-floating">
-        <input type="email" name="customer_email" id="customer_email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <input type="email" name="cust_email" id="cust_email" class="form-control" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating">
-        <input type="password" name="customer_pass" id="customer_pass" class="form-control" id="floatingPassword" placeholder="Password">
+        <input type="password" name="cust_pass" id="cust_pass" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Password</label>
       </div>
 
-      <div class="checkbox mb-3 text-white">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
+      <br>
       <button class="w-100 btn btn-lg btn-primary" name="loginButton" type="submit">Sign in</button>
-      <p class="mt-3 mb-3 text-muted">Don't Have An Account? Sign Up <a href="signUp.php">Here</a></p>
       <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
     </form>
   </main>

@@ -1,6 +1,6 @@
 <?php 
 //make the controller aware of the class
-include_once(dirname(__FILE__)) . '/../class/all_class.php';
+include_once("../class/all_class.php");
 
 
 
@@ -12,13 +12,48 @@ include_once(dirname(__FILE__)) . '/../class/all_class.php';
 
 // }
 
-// function delcontact_ctr($itemid){
-// //run instance
-// $delete_contact = new ContactPhoneClass();
-// //run method
-// return $delete_contact->deleteContact_cls($itemid);
+function identifyVehicle(){
+//run instance
+$identifyVehicle = new ContactClass();
+//run method
+return $identifyVehicle->identifyVehicle_cls();
+}
 
-// }
+function deliveryInfo(){
+    //run instance
+    $identifyVehicle = new ContactClass();
+    //run method
+    return $identifyVehicle->deliveryInfo_cls();
+}
+
+function invoice(){
+    //run instance
+    $identifyVehicle = new ContactClass();
+    //run method
+    return $identifyVehicle->invoice_cls();
+}
+
+function inventory(){
+    //run instance
+    $identifyVehicle = new ContactClass();
+    //run method
+    return $identifyVehicle->inventory_cls();
+}
+
+function sender(){
+    //run instance
+    $identifyVehicle = new ContactClass();
+    //run method
+    return $identifyVehicle->sender_cls();
+}
+
+function recipients(){
+    //run instance
+    $identifyVehicle = new ContactClass();
+    //run method
+    return $identifyVehicle->recipients_cls();
+}
+
 
 // function editcontact_ctr($id,$newname,$newphone){
 // //run instance
@@ -177,5 +212,3 @@ function delete_newsrecord_ctr($id)
     // call the method from the class
     return $class_instance->delete_newsrecord_cls($id);
 }
-
-?>

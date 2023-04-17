@@ -3,7 +3,7 @@ include("../controller/all_controller.php");
 
 if(isset($_POST['loginButton'])){
     $email=$_POST['cust_email'];
-    $unencryptpass=$_POST['cust_pass'];
+    $pass=$_POST['cust_pass'];
 
 
     if(getUserDetailsByEmail_ctr($email)!=false){
@@ -13,8 +13,6 @@ if(isset($_POST['loginButton'])){
         if($verify){
             session_start();
             $_SESSION['cust_id']=$result['customer_id'];
-            $_SESSION['cust_fname']=$result['customer_fname'];
-            $_SESSION['cust_lname']=$result['customer_lname'];
             $_SESSION['cust_email']=$result['customer_email'];
             $_SESSION['user_role']=$result['user_role'];
             if ($_SESSION['user_role'] == 2) {
@@ -22,7 +20,6 @@ if(isset($_POST['loginButton'])){
                 } else if($_SESSION['user_role'] == 1) {
                     header('location: ../website/homepage.php');
                 }
-        
         }
         else{
             session_start();
